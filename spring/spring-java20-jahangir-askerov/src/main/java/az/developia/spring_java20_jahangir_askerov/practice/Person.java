@@ -1,4 +1,4 @@
-package az.developia.spring_java20_jahangir_askerov;
+package az.developia.spring_java20_jahangir_askerov.practice;
 
 public class Person {
 
