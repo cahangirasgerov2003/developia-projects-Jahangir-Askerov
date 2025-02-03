@@ -47,4 +47,16 @@ public class Repository {
 		return books;
 	}
 
+	public void createNewBook(Book book) {
+		try {
+			Connection connection = dataSource.getConnection();
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO books (name, price) VALUES (?, ?)");
+			ps.setString(1, book.getBookName());
+			ps.setDouble(2, book.getPrice());
+			ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 }
