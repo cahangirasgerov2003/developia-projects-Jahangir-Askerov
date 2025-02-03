@@ -25,7 +25,7 @@ public class BookController {
 	}
 
 	@GetMapping(path = "/search")
-	public List<Book> getBooksByName(@RequestParam(value = "q", required = true, defaultValue = "") String query){
+	public List<Book> getBooksByName(@RequestParam(value = "q", required = true, defaultValue = "") String query) {
 		return service.getBooksByName(query);
 	}
 

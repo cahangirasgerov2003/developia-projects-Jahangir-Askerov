@@ -3,6 +3,7 @@ package az.developia.spring_java20_jahangir_askerov.repository;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import az.developia.spring_java20_jahangir_askerov.model.Book;
 
 @RestController
-public class Repository {
+public class Repository implements AutoCloseable {
 
 	@Autowired
 	private DataSource dataSource;
@@ -22,11 +23,9 @@ public class Repository {
 	public List<Book> getAllBooks() {
 		List<Book> books = new ArrayList<Book>();
 
-		try {
-			Connection connection = dataSource.getConnection();
-			PreparedStatement ps = connection.prepareStatement("SELECT * FROM books");
-			ResultSet rs = ps.executeQuery();
-
+		try (Connection connection = dataSource.getConnection();
+				PreparedStatement ps = connection.prepareStatement("SELECT * FROM books");
+				ResultSet rs = ps.executeQuery();) {
 			while (rs.next()) {
 				Integer id = rs.getInt("id");
 				String name = rs.getString("name");
@@ -40,7 +39,7 @@ public class Repository {
 				Book book = new Book(id, name, price);
 				books.add(book);
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
@@ -48,13 +47,12 @@ public class Repository {
 	}
 
 	public void createNewBook(Book book) {
-		try {
-			Connection connection = dataSource.getConnection();
-			PreparedStatement ps = connection.prepareStatement("INSERT INTO books (name, price) VALUES (?, ?)");
+		try (Connection connection = dataSource.getConnection();
+				PreparedStatement ps = connection.prepareStatement("INSERT INTO books (name, price) VALUES (?, ?)");) {
 			ps.setString(1, book.getBookName());
 			ps.setDouble(2, book.getPrice());
 			ps.executeUpdate();
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
