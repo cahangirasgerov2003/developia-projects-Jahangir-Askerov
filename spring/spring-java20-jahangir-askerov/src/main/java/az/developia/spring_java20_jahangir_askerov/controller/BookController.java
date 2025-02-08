@@ -1,6 +1,6 @@
 package az.developia.spring_java20_jahangir_askerov.controller;
 
-import az.developia.spring_java20_jahangir_askerov.model.Book;
+import az.developia.spring_java20_jahangir_askerov.model.BookEntity;
 import az.developia.spring_java20_jahangir_askerov.model.BookUpdateRequest;
 import az.developia.spring_java20_jahangir_askerov.service.BookService;
 
@@ -24,23 +24,23 @@ public class BookController {
 	private BookService service;
 
 	@GetMapping(path = "/all")
-	public List<Book> getAllBooks() {
+	public List<BookEntity> getAllBooks() {
 		return service.getAllBooks();
 	}
 
 	@GetMapping(path = "/{id}")
-	public Book getBookById(@PathVariable Integer id) {
+	public BookEntity getBookById(@PathVariable Integer id) {
 		return service.getBookById(id);
 	}
 
 	@GetMapping(path = "/search")
-	public List<Book> getBooksByName(@RequestParam(name = "name") String query) {
+	public List<BookEntity> getBooksByName(@RequestParam(name = "name", defaultValue = "") String query) {
 		return service.getBooksByName(query);
 	}
 
 	@PostMapping(path = "/create")
-	public Integer createNewBook(@RequestBody Book book) {
-		return service.createNewBook(book);
+	public Integer createNewBook(@RequestBody BookEntity bookEntity) {
+		return service.createNewBook(bookEntity);
 	}
 
 	@PutMapping(path = "/{id}")
