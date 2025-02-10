@@ -1,10 +1,9 @@
 package az.developia.spring_java20_jahangir_askerov.controller;
 
-import az.developia.spring_java20_jahangir_askerov.model.BookEntity;
-import az.developia.spring_java20_jahangir_askerov.model.BookUpdateRequest;
-import az.developia.spring_java20_jahangir_askerov.service.BookService;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,9 +12,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import az.developia.spring_java20_jahangir_askerov.model.BookEntity;
+import az.developia.spring_java20_jahangir_askerov.model.BookUpdateRequest;
+import az.developia.spring_java20_jahangir_askerov.service.BookService;
+import jakarta.validation.Valid;
 
 @RestController // Inversion of controller
 @RequestMapping(path = "/books")
@@ -39,12 +42,13 @@ public class BookController {
 	}
 
 	@PostMapping(path = "/create")
-	public Integer createNewBook(@RequestBody BookEntity bookEntity) {
+	@ResponseStatus(code = HttpStatus.CREATED)
+	public Integer createNewBook(@Valid @RequestBody BookEntity bookEntity) {
 		return service.createNewBook(bookEntity);
 	}
 
 	@PutMapping(path = "/{id}")
-	public void updateBookById(@PathVariable Integer id, @RequestBody BookUpdateRequest book) {
+	public void updateBookById(@PathVariable Integer id, @Valid @RequestBody BookUpdateRequest book) {
 		service.updateBookById(id, book);
 	}
 

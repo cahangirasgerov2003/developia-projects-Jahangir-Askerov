@@ -1,13 +1,15 @@
 package az.developia.spring_java20_jahangir_askerov.service;
 
-import az.developia.spring_java20_jahangir_askerov.model.BookEntity;
-import az.developia.spring_java20_jahangir_askerov.model.BookUpdateRequest;
-import az.developia.spring_java20_jahangir_askerov.repository.BookRepository;
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.Optional;
+import az.developia.spring_java20_jahangir_askerov.model.BookEntity;
+import az.developia.spring_java20_jahangir_askerov.model.BookUpdateRequest;
+import az.developia.spring_java20_jahangir_askerov.repository.BookRepository;
 
 @RestController
 public class BookService {
@@ -38,13 +40,15 @@ public class BookService {
 
 	public void updateBookById(Integer id, BookUpdateRequest book) {
 		Optional<BookEntity> optionalBook = repository.findById(id);
-		double price = book.getPrice();
+		BigDecimal price = book.getPrice();
+		String description = book.getDescription();
 		if (optionalBook.isEmpty()) {
 			return;
 		}
- 
+
 		BookEntity existingBook = optionalBook.get();
 		existingBook.setPrice(price);
+		existingBook.setDescription(description);
 		repository.save(existingBook);
 	}
 

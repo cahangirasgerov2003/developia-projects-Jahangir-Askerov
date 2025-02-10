@@ -3,6 +3,7 @@ package az.developia.spring_java20_jahangir_askerov.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,11 +12,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import az.developia.spring_java20_jahangir_askerov.model.SellerEntity;
 import az.developia.spring_java20_jahangir_askerov.model.SellerUpdateRequest;
 import az.developia.spring_java20_jahangir_askerov.service.SellerService;
+import jakarta.validation.Valid;
 
 @RestController // Inversion of control
 @RequestMapping(path = "sellers")
@@ -39,12 +42,13 @@ public class SellerController {
 	}
 
 	@PostMapping(path = "/create")
-	public Integer createNewSeller(@RequestBody SellerEntity seller) {
+	@ResponseStatus(code = HttpStatus.CREATED)
+	public Integer createNewSeller(@Valid @RequestBody SellerEntity seller) {
 		return service.createNewSeller(seller);
 	}
 
 	@PutMapping(path = "/{id}")
-	public void updateSellerByID(@PathVariable Integer id, @RequestBody SellerUpdateRequest seller) {
+	public void updateSellerByID(@PathVariable Integer id, @Valid @RequestBody SellerUpdateRequest seller) {
 		service.updateSellerByID(id, seller);
 	}
 

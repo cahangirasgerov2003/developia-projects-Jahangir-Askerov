@@ -47,6 +47,7 @@ public class SellerService {
 		SellerEntity existingSeller = optionalSeller.get();
 		existingSeller.setUsername(seller.getUsername());
 		existingSeller.setPassword(seller.getPassword());
+		existingSeller.setEmail(seller.getEmail());
 		existingSeller.getAddress().setCountry(seller.getAddress().getCountry());
 		existingSeller.getAddress().setCity(seller.getAddress().getCity());
 		existingSeller.getAddress().setStreet(seller.getAddress().getStreet());
