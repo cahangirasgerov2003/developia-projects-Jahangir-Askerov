@@ -1,5 +1,7 @@
 package az.developia.spring_java20_jahangir_askerov.model;
 
+import jakarta.persistence.Embedded;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
@@ -11,6 +13,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SellerUpdateRequest {
 	@NotNull(message = "The address part of the seller cannot be empty")
+	@Valid
+	@Embedded
 	private Address address;
 
 	@NotNull(message = "The username part of the seller cannot be empty")

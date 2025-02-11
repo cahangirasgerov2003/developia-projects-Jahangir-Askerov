@@ -27,11 +27,11 @@ public class SellerEntity {
 	private Integer id;
 
 	@NotNull(message = "The name part of the seller cannot be empty")
-	@Size(min = 3, max = 80, message = "The name of the seller can contain a minimum of 2 and a maximum of 40 characters")
+	@Size(min = 3, max = 40, message = "The name of the seller can contain a minimum of 2 and a maximum of 40 characters")
 	private String name;
 
 	@NotNull(message = "The surname part of the seller cannot be empty")
-	@Size(min = 3, max = 80, message = "The surname of the seller can contain a minimum of 2 and a maximum of 40 characters")
+	@Size(min = 3, max = 40, message = "The surname of the seller can contain a minimum of 2 and a maximum of 40 characters")
 	private String surname;
 
 	@NotNull
@@ -49,7 +49,7 @@ public class SellerEntity {
 
 	@NotNull(message = "The username part of the seller cannot be empty")
 	private String username;
-
+ 
 	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&()_+=^,.;:/<>|\\-])[A-Za-z\\d@$!%*?&()_+=^,.;:/<>|\\-]{8,20}$", message = "The password format is incorrect")
 	private String password;
 }
