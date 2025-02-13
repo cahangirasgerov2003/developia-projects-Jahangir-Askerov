@@ -1,5 +1,6 @@
 package az.developia.spring_java20_jahangir_askerov.model;
 
+import az.developia.spring_java20_jahangir_askerov.validation.ValidPassword;
 import jakarta.persistence.Embedded;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -19,8 +20,8 @@ public class SellerUpdateRequest {
 
 	@NotNull(message = "The username part of the seller cannot be empty")
 	private String username;
-
-	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&()_+=^,.;:/<>|\\-])[A-Za-z\\d@$!%*?&()_+=^,.;:/<>|\\-]{8,20}$", message = "The password format is incorrect")
+ 
+	@ValidPassword
 	private String password;
 
 	@Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "The email format is incorrect, please check and try again")

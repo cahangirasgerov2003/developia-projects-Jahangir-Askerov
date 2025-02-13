@@ -1,5 +1,6 @@
 package az.developia.spring_java20_jahangir_askerov.model;
 
+import az.developia.spring_java20_jahangir_askerov.validation.ValidPassword;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -49,7 +50,7 @@ public class SellerEntity {
 
 	@NotNull(message = "The username part of the seller cannot be empty")
 	private String username;
- 
-	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&()_+=^,.;:/<>|\\-])[A-Za-z\\d@$!%*?&()_+=^,.;:/<>|\\-]{8,20}$", message = "The password format is incorrect")
+
+	@ValidPassword
 	private String password;
 }
