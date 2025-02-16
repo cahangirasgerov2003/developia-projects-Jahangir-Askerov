@@ -5,11 +5,11 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class CustomFieldError {
+public class ValidationFieldError {
 	String defaultMessage;
 	String field;
 
-	public CustomFieldError(String field, String defaultMessage) {
+	public ValidationFieldError(String field, String defaultMessage) {
 		this.field = field;
 		this.defaultMessage = defaultMessage;
 	}

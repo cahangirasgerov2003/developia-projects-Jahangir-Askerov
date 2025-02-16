@@ -7,11 +7,10 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class CustomException extends RuntimeException {
-
+public class ValidationException extends RuntimeException {
 	private BindingResult br;
 
-	public CustomException(String message, BindingResult br) {
+	public ValidationException(String message, BindingResult br) {
 		super(message);
 		this.br = br;
 	}

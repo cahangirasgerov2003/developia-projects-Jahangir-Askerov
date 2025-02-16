@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
+import az.developia.spring_java20_jahangir_askerov.exception.NotFoundException;
 import az.developia.spring_java20_jahangir_askerov.model.SellerEntity;
 import az.developia.spring_java20_jahangir_askerov.model.SellerUpdateRequest;
 import az.developia.spring_java20_jahangir_askerov.repository.SellerRepository;
@@ -23,7 +24,7 @@ public class SellerService {
 	public SellerEntity getSellerByID(Integer id) {
 		Optional<SellerEntity> optionalSeller = repository.findById(id);
 		if (optionalSeller.isEmpty()) {
-			return null;
+			throw new NotFoundException("The seller with the ID you are looking for does not exist !");
 		}
 
 		return optionalSeller.get();
@@ -41,7 +42,7 @@ public class SellerService {
 	public void updateSellerByID(Integer id, SellerUpdateRequest seller) {
 		Optional<SellerEntity> optionalSeller = repository.findById(id);
 		if (optionalSeller.isEmpty()) {
-			return;
+			throw new NotFoundException("The seller with the ID you are looking for does not exist !");
 		}
 
 		SellerEntity existingSeller = optionalSeller.get();
@@ -57,6 +58,11 @@ public class SellerService {
 	}
 
 	public void deleteSellerByID(Integer id) {
+		Optional<SellerEntity> optionalSeller = repository.findById(id);
+		if (optionalSeller.isEmpty()) {
+			throw new NotFoundException("The seller with the ID you are looking for does not exist !");
+		}
+
 		repository.deleteById(id);
 	}
 

@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class CustomExceptionResponse {
+public class ValidationExceptionResponse {
 	private String Message;
-	private List<CustomFieldError> fieldErrors;
+	private List<ValidationFieldError> fieldErrors;
 	private LocalDateTime errorOccurrenceTime;
 }

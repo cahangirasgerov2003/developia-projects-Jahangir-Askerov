@@ -20,11 +20,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import az.developia.spring_java20_jahangir_askerov.exception.CustomException;
+import az.developia.spring_java20_jahangir_askerov.exception.NotFoundException;
+import az.developia.spring_java20_jahangir_askerov.exception.ValidationException;
 import az.developia.spring_java20_jahangir_askerov.model.BookEntity;
 import az.developia.spring_java20_jahangir_askerov.model.BookUpdateRequest;
-import az.developia.spring_java20_jahangir_askerov.model.CustomExceptionResponse;
-import az.developia.spring_java20_jahangir_askerov.model.CustomFieldError;
+import az.developia.spring_java20_jahangir_askerov.model.NotFoundExceptionResponse;
+import az.developia.spring_java20_jahangir_askerov.model.ValidationExceptionResponse;
+import az.developia.spring_java20_jahangir_askerov.model.ValidationFieldError;
 import az.developia.spring_java20_jahangir_askerov.service.BookService;
 import jakarta.validation.Valid;
 
@@ -53,13 +55,17 @@ public class BookController {
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public Integer createNewBook(@Valid @RequestBody BookEntity bookEntity, BindingResult br) {
 		if (br.hasErrors()) {
-			throw new CustomException("There is a validation problem in the book data !", br);
+			throw new ValidationException("There is a validation problem in the book data !", br);
 		}
 		return service.createNewBook(bookEntity);
 	}
 
 	@PutMapping(path = "/{id}")
-	public void updateBookById(@PathVariable Integer id, @Valid @RequestBody BookUpdateRequest book) {
+	public void updateBookById(@PathVariable Integer id, @Valid @RequestBody BookUpdateRequest book, BindingResult br) {
+		if (br.hasErrors()) {
+			throw new ValidationException("There is a validation problem in the book data !", br);
+		}
+
 		service.updateBookById(id, book);
 	}
 
@@ -68,21 +74,29 @@ public class BookController {
 		service.deleteBookById(id);
 	}
 
-	@ExceptionHandler
-	public CustomExceptionResponse handleCustomException(CustomException e) {
-		List<FieldError> fieldErrors = e.getBr().getFieldErrors();
-		List<CustomFieldError> customFieldErrors = new ArrayList<CustomFieldError>();
+	@ExceptionHandler(ValidationException.class)
+	public ValidationExceptionResponse handleValidationException(ValidationException e) {
+		BindingResult bindingResult = e.getBr();
+		List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+		List<ValidationFieldError> validationFieldErrors = new ArrayList<ValidationFieldError>();
 		for (FieldError fieldError : fieldErrors) {
-			CustomFieldError customFieldError = new CustomFieldError(fieldError.getField(),
+			ValidationFieldError validationFieldError = new ValidationFieldError(fieldError.getField(),
 					fieldError.getDefaultMessage());
-			customFieldErrors.add(customFieldError);
+			validationFieldErrors.add(validationFieldError);
 		}
 
-		CustomExceptionResponse customExceptionResponse = new CustomExceptionResponse();
-		customExceptionResponse.setErrorOccurrenceTime(LocalDateTime.now());
-		customExceptionResponse.setMessage(e.getMessage());
-		customExceptionResponse.setFieldErrors(customFieldErrors);
-		return customExceptionResponse;
+		ValidationExceptionResponse response = new ValidationExceptionResponse();
+		response.setErrorOccurrenceTime(LocalDateTime.now());
+		response.setMessage(e.getMessage());
+		response.setFieldErrors(validationFieldErrors);
+		return response;
+	}
+
+	@ExceptionHandler(NotFoundException.class)
+	public NotFoundExceptionResponse handleNotFoundException(NotFoundException e) {
+		NotFoundExceptionResponse response = new NotFoundExceptionResponse();
+		response.setMessage(e.getMessage());
+		return response;
 	}
 
 }
