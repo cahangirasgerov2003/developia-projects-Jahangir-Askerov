@@ -20,7 +20,7 @@ public class SellerUpdateRequest {
 
 	@NotNull(message = "The username part of the seller cannot be empty")
 	private String username;
- 
+
 	@ValidPassword
 	private String password;
 
