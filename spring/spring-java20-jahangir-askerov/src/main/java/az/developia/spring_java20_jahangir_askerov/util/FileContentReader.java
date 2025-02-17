@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 
 import org.springframework.stereotype.Component;
- 
+
 @Component
 public class FileContentReader {
 

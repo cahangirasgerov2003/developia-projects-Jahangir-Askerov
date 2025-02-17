@@ -1,7 +1,5 @@
 package az.developia.spring_java20_jahangir_askerov.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
@@ -17,8 +15,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import az.developia.spring_java20_jahangir_askerov.exception.ValidationException;
-import az.developia.spring_java20_jahangir_askerov.model.SellerEntity;
-import az.developia.spring_java20_jahangir_askerov.model.SellerUpdateRequest;
+import az.developia.spring_java20_jahangir_askerov.request.SellerAddRequest;
+import az.developia.spring_java20_jahangir_askerov.request.SellerUpdateRequest;
+import az.developia.spring_java20_jahangir_askerov.response.SellerListResponse;
+import az.developia.spring_java20_jahangir_askerov.response.SellerSingleResponse;
 import az.developia.spring_java20_jahangir_askerov.service.SellerService;
 import az.developia.spring_java20_jahangir_askerov.util.FileContentReader;
 import jakarta.validation.Valid;
@@ -33,23 +33,23 @@ public class SellerController {
 	private FileContentReader contentReader;
 
 	@GetMapping(path = "/all")
-	public List<SellerEntity> getAllSellers() {
+	public SellerListResponse getAllSellers() {
 		return service.getAllSellers();
 	}
 
 	@GetMapping(path = "/{id}")
-	public SellerEntity getSellerByID(@PathVariable Integer id) {
+	public SellerSingleResponse getSellerByID(@PathVariable Integer id) {
 		return service.getSellerByID(id);
 	}
 
 	@GetMapping(path = "/search")
-	public List<SellerEntity> getSellersByName(@RequestParam(name = "name", defaultValue = "") String query) {
+	public SellerListResponse getSellersByName(@RequestParam(name = "name", defaultValue = "") String query) {
 		return service.getSellersByName(query);
 	}
 
 	@PostMapping(path = "/create")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public Integer createNewSeller(@Valid @RequestBody SellerEntity seller, BindingResult br) {
+	public Integer createNewSeller(@Valid @RequestBody SellerAddRequest seller, BindingResult br) {
 		if (br.hasErrors()) {
 			throw new ValidationException(contentReader.readFromFile("validationMessage.txt"), br);
 		}

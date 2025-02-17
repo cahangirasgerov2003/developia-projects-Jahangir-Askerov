@@ -1,4 +1,4 @@
-package az.developia.spring_java20_jahangir_askerov.model;
+package az.developia.spring_java20_jahangir_askerov.response;
 
 import java.time.LocalDateTime;
 

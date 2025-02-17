@@ -1,26 +1,16 @@
-package az.developia.spring_java20_jahangir_askerov.model;
+package az.developia.spring_java20_jahangir_askerov.response;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Table(name = "books")
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookEntity {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+public class BookSingleResponse {
 	private Integer id;
 
 	private String name;

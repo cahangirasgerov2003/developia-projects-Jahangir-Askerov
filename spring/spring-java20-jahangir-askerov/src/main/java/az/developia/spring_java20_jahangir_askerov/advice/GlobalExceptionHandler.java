@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import az.developia.spring_java20_jahangir_askerov.exception.NotFoundException;
 import az.developia.spring_java20_jahangir_askerov.exception.ValidationException;
-import az.developia.spring_java20_jahangir_askerov.model.NotFoundExceptionResponse;
-import az.developia.spring_java20_jahangir_askerov.model.ValidationExceptionResponse;
 import az.developia.spring_java20_jahangir_askerov.model.ValidationFieldError;
+import az.developia.spring_java20_jahangir_askerov.response.NotFoundExceptionResponse;
+import az.developia.spring_java20_jahangir_askerov.response.ValidationExceptionResponse;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {

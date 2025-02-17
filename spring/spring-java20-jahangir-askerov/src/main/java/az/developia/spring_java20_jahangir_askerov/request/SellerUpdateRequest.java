@@ -1,5 +1,6 @@
-package az.developia.spring_java20_jahangir_askerov.model;
+package az.developia.spring_java20_jahangir_askerov.request;
 
+import az.developia.spring_java20_jahangir_askerov.model.Address;
 import az.developia.spring_java20_jahangir_askerov.validation.ValidPassword;
 import jakarta.persistence.Embedded;
 import jakarta.validation.Valid;
