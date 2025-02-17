@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class SpringJava20JahangirAskerovApplication {
 	public static void main(String[] args) {
+//		Security test
 		ConfigurableApplicationContext context = SpringApplication.run(SpringJava20JahangirAskerovApplication.class,
 				args);
 
