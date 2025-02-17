@@ -2,6 +2,7 @@ package az.developia.spring_java20_jahangir_askerov.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +33,7 @@ public class BookController {
 	@Autowired
 	private FileContentReader contentReader;
 
+	@PreAuthorize(value = "hasAuthority('ROLE_GET_BOOK')")
 	@GetMapping(path = "/all")
 	public BookListResponse getAllBooks() {
 		return service.getAllBooks();
@@ -49,6 +51,7 @@ public class BookController {
 
 	@PostMapping(path = "/create")
 	@ResponseStatus(code = HttpStatus.CREATED)
+	@PreAuthorize(value = "hasAuthority('ROLE_ADD_BOOK')")
 	public Integer createNewBook(@Valid @RequestBody BookAddRequest book, BindingResult br) {
 		if (br.hasErrors()) {
 			throw new ValidationException(contentReader.readFromFile("validationMessage.txt"), br);

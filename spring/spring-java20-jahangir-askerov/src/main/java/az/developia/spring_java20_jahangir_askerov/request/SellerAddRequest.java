@@ -17,11 +17,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SellerAddRequest {
 	@NotNull(message = "The name part of the seller cannot be empty")
-	@Size(min = 3, max = 40, message = "The name of the seller can contain a minimum of 2 and a maximum of 40 characters")
+	@Size(min = 3, max = 40, message = "The name of the seller can contain a minimum of 3 and a maximum of 40 characters")
 	private String name;
 
 	@NotNull(message = "The surname part of the seller cannot be empty")
-	@Size(min = 3, max = 40, message = "The surname of the seller can contain a minimum of 2 and a maximum of 40 characters")
+	@Size(min = 3, max = 40, message = "The surname of the seller can contain a minimum of 3 and a maximum of 40 characters")
 	private String surname;
 
 	@NotNull
@@ -38,6 +38,7 @@ public class SellerAddRequest {
 	private Address address;
 
 	@NotNull(message = "The username part of the seller cannot be empty")
+	@Size(min = 2 ,max = 40, message = "The username of the seller can contain a minimum of 2 and a maximum of 40 characters")
 	private String username;
 
 	@ValidPassword
