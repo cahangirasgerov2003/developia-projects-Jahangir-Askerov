@@ -11,11 +11,15 @@ import az.developia.spring_java20_jahangir_askerov.exception.NotFoundException;
 import az.developia.spring_java20_jahangir_askerov.model.BookEntity;
 import az.developia.spring_java20_jahangir_askerov.model.BookUpdateRequest;
 import az.developia.spring_java20_jahangir_askerov.repository.BookRepository;
+import az.developia.spring_java20_jahangir_askerov.util.FileContentReader;
 
 @RestController
 public class BookService {
 	@Autowired
 	private BookRepository repository;
+
+	@Autowired
+	private FileContentReader contentReader;
 
 	public List<BookEntity> getAllBooks() {
 		return repository.findAll();
@@ -29,7 +33,7 @@ public class BookService {
 	public BookEntity getBookById(Integer id) {
 		Optional<BookEntity> optionalBook = repository.findById(id);
 		if (optionalBook.isEmpty()) {
-			throw new NotFoundException("The book with the ID you are looking for does not exist !");
+			throw new NotFoundException(contentReader.readFromFile("idNotFound.txt"));
 		}
 
 		return optionalBook.get();
@@ -37,22 +41,22 @@ public class BookService {
 
 	public void deleteBookById(Integer id) {
 		Optional<BookEntity> optionalBook = repository.findById(id);
-		if(optionalBook.isEmpty()) {
-			throw new NotFoundException("The book with the ID you are looking for does not exist !");
+		if (optionalBook.isEmpty()) {
+			throw new NotFoundException(contentReader.readFromFile("idNotFound.txt"));
 		}
-		
+
 		repository.deleteById(id);
 	}
 
 	public void updateBookById(Integer id, BookUpdateRequest book) {
 		Optional<BookEntity> optionalBook = repository.findById(id);
 		if (optionalBook.isEmpty()) {
-			throw new NotFoundException("The book with the ID you are looking for does not exist !");
+			throw new NotFoundException(contentReader.readFromFile("idNotFound.txt"));
 		}
 
 		BigDecimal price = book.getPrice();
 		String description = book.getDescription();
-		
+
 		BookEntity existingBook = optionalBook.get();
 		existingBook.setPrice(price);
 		existingBook.setDescription(description);

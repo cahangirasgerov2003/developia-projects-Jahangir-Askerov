@@ -20,6 +20,7 @@ import az.developia.spring_java20_jahangir_askerov.exception.ValidationException
 import az.developia.spring_java20_jahangir_askerov.model.BookEntity;
 import az.developia.spring_java20_jahangir_askerov.model.BookUpdateRequest;
 import az.developia.spring_java20_jahangir_askerov.service.BookService;
+import az.developia.spring_java20_jahangir_askerov.util.FileContentReader;
 import jakarta.validation.Valid;
 
 @RestController // Inversion of controller
@@ -27,6 +28,9 @@ import jakarta.validation.Valid;
 public class BookController {
 	@Autowired // Dependency injection
 	private BookService service;
+	
+	@Autowired
+	private FileContentReader contentReader;
 
 	@GetMapping(path = "/all")
 	public List<BookEntity> getAllBooks() {
@@ -47,7 +51,7 @@ public class BookController {
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public Integer createNewBook(@Valid @RequestBody BookEntity bookEntity, BindingResult br) {
 		if (br.hasErrors()) {
-			throw new ValidationException("There is a validation problem in the book data !", br);
+			throw new ValidationException(contentReader.readFromFile("validationMessage.txt"), br);
 		}
 		return service.createNewBook(bookEntity);
 	}
@@ -55,7 +59,7 @@ public class BookController {
 	@PutMapping(path = "/{id}")
 	public void updateBookById(@PathVariable Integer id, @Valid @RequestBody BookUpdateRequest book, BindingResult br) {
 		if (br.hasErrors()) {
-			throw new ValidationException("There is a validation problem in the book data !", br);
+			throw new ValidationException(contentReader.readFromFile("validationMessage.txt"), br);
 		}
 
 		service.updateBookById(id, book);

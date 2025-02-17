@@ -10,12 +10,16 @@ import az.developia.spring_java20_jahangir_askerov.exception.NotFoundException;
 import az.developia.spring_java20_jahangir_askerov.model.SellerEntity;
 import az.developia.spring_java20_jahangir_askerov.model.SellerUpdateRequest;
 import az.developia.spring_java20_jahangir_askerov.repository.SellerRepository;
+import az.developia.spring_java20_jahangir_askerov.util.FileContentReader;
 
 @RestController
 public class SellerService {
 
 	@Autowired
 	private SellerRepository repository;
+	
+	@Autowired
+	private FileContentReader contentReader;
 
 	public List<SellerEntity> getAllSellers() {
 		return repository.findAll();
@@ -24,7 +28,7 @@ public class SellerService {
 	public SellerEntity getSellerByID(Integer id) {
 		Optional<SellerEntity> optionalSeller = repository.findById(id);
 		if (optionalSeller.isEmpty()) {
-			throw new NotFoundException("The seller with the ID you are looking for does not exist !");
+			throw new NotFoundException(contentReader.readFromFile("idNotFound.txt"));
 		}
 
 		return optionalSeller.get();
@@ -42,7 +46,7 @@ public class SellerService {
 	public void updateSellerByID(Integer id, SellerUpdateRequest seller) {
 		Optional<SellerEntity> optionalSeller = repository.findById(id);
 		if (optionalSeller.isEmpty()) {
-			throw new NotFoundException("The seller with the ID you are looking for does not exist !");
+			throw new NotFoundException(contentReader.readFromFile("idNotFound.txt"));
 		}
 
 		SellerEntity existingSeller = optionalSeller.get();
@@ -60,7 +64,7 @@ public class SellerService {
 	public void deleteSellerByID(Integer id) {
 		Optional<SellerEntity> optionalSeller = repository.findById(id);
 		if (optionalSeller.isEmpty()) {
-			throw new NotFoundException("The seller with the ID you are looking for does not exist !");
+			throw new NotFoundException(contentReader.readFromFile("idNotFound.txt"));
 		}
 
 		repository.deleteById(id);

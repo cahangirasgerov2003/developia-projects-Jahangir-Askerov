@@ -20,6 +20,7 @@ import az.developia.spring_java20_jahangir_askerov.exception.ValidationException
 import az.developia.spring_java20_jahangir_askerov.model.SellerEntity;
 import az.developia.spring_java20_jahangir_askerov.model.SellerUpdateRequest;
 import az.developia.spring_java20_jahangir_askerov.service.SellerService;
+import az.developia.spring_java20_jahangir_askerov.util.FileContentReader;
 import jakarta.validation.Valid;
 
 @RestController // Inversion of control
@@ -27,6 +28,9 @@ import jakarta.validation.Valid;
 public class SellerController {
 	@Autowired // Dependency injection
 	private SellerService service;
+
+	@Autowired
+	private FileContentReader contentReader;
 
 	@GetMapping(path = "/all")
 	public List<SellerEntity> getAllSellers() {
@@ -47,7 +51,7 @@ public class SellerController {
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public Integer createNewSeller(@Valid @RequestBody SellerEntity seller, BindingResult br) {
 		if (br.hasErrors()) {
-			throw new ValidationException("There is a validation problem in the seller data !", br);
+			throw new ValidationException(contentReader.readFromFile("validationMessage.txt"), br);
 		}
 		return service.createNewSeller(seller);
 	}
@@ -56,7 +60,7 @@ public class SellerController {
 	public void updateSellerByID(@PathVariable Integer id, @Valid @RequestBody SellerUpdateRequest seller,
 			BindingResult br) {
 		if (br.hasErrors()) {
-			throw new ValidationException("There is a validation problem in the seller data !", br);
+			throw new ValidationException(contentReader.readFromFile("validationMessage.txt"), br);
 		}
 		service.updateSellerByID(id, seller);
 	}
