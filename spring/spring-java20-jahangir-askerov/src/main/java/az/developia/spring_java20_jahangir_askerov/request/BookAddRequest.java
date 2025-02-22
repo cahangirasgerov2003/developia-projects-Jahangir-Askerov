@@ -1,7 +1,7 @@
 package az.developia.spring_java20_jahangir_askerov.request;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import jakarta.persistence.PrePersist;
 import jakarta.validation.constraints.Digits;
@@ -43,7 +43,7 @@ public class BookAddRequest {
 
 	@NotNull(message = "The page count part of the book cannot be empty")
 	@Past(message = "Publish date must be in the past")
-	private LocalDateTime publishDate;
+	private LocalDate publishDate;
 
 	@PrePersist
 	public void setDefaultColor() {

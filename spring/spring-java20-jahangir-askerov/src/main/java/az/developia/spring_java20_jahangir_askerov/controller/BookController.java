@@ -34,7 +34,7 @@ public class BookController {
 	private FileContentReader contentReader;
 
 	@GetMapping(path = "/all")
-	@PreAuthorize(value = "hasAuhority('ROLE_GET_BOOKS')")
+	@PreAuthorize(value = "hasAuthority('ROLE_GET_BOOKS')")
 	public BookListResponse getAllBooks() {
 		return service.getAllBooks();
 	}
@@ -51,7 +51,7 @@ public class BookController {
 
 	@PostMapping(path = "/create")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	@PreAuthorize(value = "hasAuthority('ROLE_SET_BOOK')")
+	@PreAuthorize(value = "hasAuthority('ROLE_ADD_BOOK')")
 	public Integer createNewBook(@Valid @RequestBody BookAddRequest book, BindingResult br) {
 		if (br.hasErrors()) {
 			throw new ValidationException(contentReader.readFromFile("validationMessage.txt"), br);

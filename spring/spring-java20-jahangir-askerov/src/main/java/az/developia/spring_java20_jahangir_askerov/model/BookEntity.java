@@ -1,7 +1,7 @@
 package az.developia.spring_java20_jahangir_askerov.model;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -35,6 +35,6 @@ public class BookEntity {
 
 	private Integer pageCount;
 
-	private LocalDateTime publishDate;
+	private LocalDate publishDate;
 
 }

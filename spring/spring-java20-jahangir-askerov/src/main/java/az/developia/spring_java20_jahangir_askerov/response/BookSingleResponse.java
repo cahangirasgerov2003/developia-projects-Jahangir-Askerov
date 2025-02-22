@@ -1,7 +1,7 @@
 package az.developia.spring_java20_jahangir_askerov.response;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,6 +25,6 @@ public class BookSingleResponse {
 
 	private Integer pageCount;
 
-	private LocalDateTime publishDate;
+	private LocalDate publishDate;
 
 }
