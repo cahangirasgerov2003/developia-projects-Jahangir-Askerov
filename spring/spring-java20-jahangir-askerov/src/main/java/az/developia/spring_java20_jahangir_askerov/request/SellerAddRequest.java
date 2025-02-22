@@ -38,7 +38,7 @@ public class SellerAddRequest {
 	private Address address;
 
 	@NotNull(message = "The username part of the seller cannot be empty")
-	@Size(min = 2 ,max = 40, message = "The username of the seller can contain a minimum of 2 and a maximum of 40 characters")
+	@Size(min = 2, max = 40, message = "The username of the seller can contain a minimum of 2 and a maximum of 40 characters")
 	private String username;
 
 	@ValidPassword
