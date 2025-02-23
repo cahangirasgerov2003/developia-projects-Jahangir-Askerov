@@ -8,8 +8,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
+import az.developia.spring_java20_jahangir_askerov.entity.BookEntity;
 import az.developia.spring_java20_jahangir_askerov.exception.NotFoundException;
-import az.developia.spring_java20_jahangir_askerov.model.BookEntity;
 import az.developia.spring_java20_jahangir_askerov.repository.BookRepository;
 import az.developia.spring_java20_jahangir_askerov.request.BookAddRequest;
 import az.developia.spring_java20_jahangir_askerov.request.BookUpdateRequest;

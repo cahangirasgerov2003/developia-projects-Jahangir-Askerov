@@ -8,8 +8,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
+import az.developia.spring_java20_jahangir_askerov.entity.SellerEntity;
 import az.developia.spring_java20_jahangir_askerov.exception.NotFoundException;
-import az.developia.spring_java20_jahangir_askerov.model.SellerEntity;
 import az.developia.spring_java20_jahangir_askerov.repository.SellerRepository;
 import az.developia.spring_java20_jahangir_askerov.request.SellerAddRequest;
 import az.developia.spring_java20_jahangir_askerov.request.SellerUpdateRequest;

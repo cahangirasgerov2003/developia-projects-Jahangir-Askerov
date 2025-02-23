@@ -1,4 +1,7 @@
-package az.developia.spring_java20_jahangir_askerov.model;
+package az.developia.spring_java20_jahangir_askerov.entity;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,27 +13,28 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "sellers")
+@Table(name = "books")
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SellerEntity {
+public class BookEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	private String name;
 
-	private String surname;
+	private String author;
 
-	private String email;
+	private BigDecimal price;
 
-	private Integer age;
+	private String description;
 
-	private Address address;
+	private String color;
 
-	private String username;
+	private Integer pageCount;
 
-	private String password;
+	private LocalDate publishDate;
+
 }
