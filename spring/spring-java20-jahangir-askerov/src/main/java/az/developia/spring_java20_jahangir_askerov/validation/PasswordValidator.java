@@ -21,7 +21,7 @@ public class PasswordValidator implements ConstraintValidator<ValidPassword, Str
 
 		if (password == null) {
 			context.disableDefaultConstraintViolation();
-			context.buildConstraintViolationWithTemplate("Password cannot be null").addConstraintViolation();
+			context.buildConstraintViolationWithTemplate("{cannot.be.empty}").addConstraintViolation();
 			return false;
 		}
 

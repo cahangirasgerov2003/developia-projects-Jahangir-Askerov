@@ -13,6 +13,7 @@ import az.developia.spring_java20_jahangir_askerov.model.SellerEntity;
 import az.developia.spring_java20_jahangir_askerov.repository.SellerRepository;
 import az.developia.spring_java20_jahangir_askerov.request.SellerAddRequest;
 import az.developia.spring_java20_jahangir_askerov.request.SellerUpdateRequest;
+import az.developia.spring_java20_jahangir_askerov.response.SellerAddResponse;
 import az.developia.spring_java20_jahangir_askerov.response.SellerListResponse;
 import az.developia.spring_java20_jahangir_askerov.response.SellerSingleResponse;
 import az.developia.spring_java20_jahangir_askerov.util.FileContentReader;
@@ -29,52 +30,48 @@ public class SellerService {
 	@Autowired
 	private ModelMapper modelMapper;
 
-	public SellerListResponse getAllSellers() {
+	public SellerAddResponse create(SellerAddRequest seller) {
+		SellerEntity sellerEntity = modelMapper.map(seller, SellerEntity.class);
+		repository.save(sellerEntity);
+		return new SellerAddResponse(sellerEntity.getId());
+	}
+
+	public SellerListResponse getAll() {
 		List<SellerEntity> allSellers = repository.findAll();
-		List<SellerSingleResponse> customAllSellers = new ArrayList<SellerSingleResponse>();
+		List<SellerSingleResponse> mappedSellers = new ArrayList<SellerSingleResponse>();
 		for (SellerEntity seller : allSellers) {
-			SellerSingleResponse sellerSingleResponse = new SellerSingleResponse();
-			modelMapper.map(seller, sellerSingleResponse);
-			customAllSellers.add(sellerSingleResponse);
+			SellerSingleResponse resp = modelMapper.map(seller, SellerSingleResponse.class);
+			mappedSellers.add(resp);
 		}
 		SellerListResponse sellers = new SellerListResponse();
-		sellers.setSellers(customAllSellers);
+		sellers.setSellers(mappedSellers);
 		return sellers;
 	}
 
-	public SellerSingleResponse getSellerByID(Integer id) {
+	public SellerSingleResponse getByID(Integer id) {
 		Optional<SellerEntity> optionalSeller = repository.findById(id);
 		if (optionalSeller.isEmpty()) {
 			throw new NotFoundException(contentReader.readFromFile("idNotFound.txt"));
 		}
 
-		SellerSingleResponse customSeller = new SellerSingleResponse();
 		SellerEntity seller = optionalSeller.get();
-		modelMapper.map(seller, customSeller);
+		SellerSingleResponse customSeller = modelMapper.map(seller, SellerSingleResponse.class);
 		return customSeller;
 	}
 
-	public SellerListResponse getSellersByName(String query) {
-		List<SellerEntity> searchedSellers = repository.findAllByNameContaining(query);
-		List<SellerSingleResponse> customSearchedSellers = new ArrayList<SellerSingleResponse>();
+	public SellerListResponse getByName(String q) {
+		List<SellerEntity> searchedSellers = repository.findAllByNameContaining(q);
+		List<SellerSingleResponse> mappedSellers = new ArrayList<SellerSingleResponse>();
 		for (SellerEntity seller : searchedSellers) {
-			SellerSingleResponse sellerSingleResponse = new SellerSingleResponse();
-			modelMapper.map(seller, sellerSingleResponse);
-			customSearchedSellers.add(sellerSingleResponse);
+			SellerSingleResponse resp = modelMapper.map(seller, SellerSingleResponse.class);
+			mappedSellers.add(resp);
 		}
 		SellerListResponse sellers = new SellerListResponse();
-		sellers.setSellers(customSearchedSellers);
+		sellers.setSellers(mappedSellers);
 		return sellers;
 	}
 
-	public Integer createNewSeller(SellerAddRequest seller) {
-		SellerEntity sellerEntity = new SellerEntity();
-		modelMapper.map(seller, sellerEntity);
-		repository.save(sellerEntity);
-		return sellerEntity.getId();
-	}
-
-	public void updateSellerByID(Integer id, SellerUpdateRequest seller) {
+	public void updateByID(Integer id, SellerUpdateRequest seller) {
 		Optional<SellerEntity> optionalSeller = repository.findById(id);
 		if (optionalSeller.isEmpty()) {
 			throw new NotFoundException(contentReader.readFromFile("idNotFound.txt"));
@@ -86,7 +83,7 @@ public class SellerService {
 		repository.save(existingSeller);
 	}
 
-	public void deleteSellerByID(Integer id) {
+	public void deleteByID(Integer id) {
 		Optional<SellerEntity> optionalSeller = repository.findById(id);
 		if (optionalSeller.isEmpty()) {
 			throw new NotFoundException(contentReader.readFromFile("idNotFound.txt"));

@@ -15,13 +15,13 @@ import jakarta.validation.Payload;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidPassword {
 
+	// ? - wild cards
+	// Class <?> generic type
+
 	String message() default "The password format is incorrect";
 
 	Class<?>[] groups() default {};
 
 	Class<? extends Payload>[] payload() default {};
-
-	// ? - wild cards
-	// Class <?> generic type
 
 }

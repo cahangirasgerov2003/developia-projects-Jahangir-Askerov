@@ -1,6 +1,6 @@
 package az.developia.spring_java20_jahangir_askerov.response;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 import az.developia.spring_java20_jahangir_askerov.model.ValidationFieldError;
@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 public class ValidationExceptionResponse {
 	private String Message;
 	private List<ValidationFieldError> fieldErrors;
-	private LocalDateTime errorOccurrenceTime;
+	private LocalDate errorOccurrenceTime;
 }

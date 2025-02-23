@@ -14,17 +14,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SellerUpdateRequest {
-	@NotNull(message = "The address part of the seller cannot be empty")
 	@Valid
 	@Embedded
+	@NotNull(message = "{field.empty}")
 	private Address address;
 
-	@NotNull(message = "The username part of the seller cannot be empty")
+	@NotNull(message = "{field.empty}")
 	private String username;
 
 	@ValidPassword
 	private String password;
 
-	@Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "The email format is incorrect, please check and try again")
+	@NotNull(message = "{field.empty}")
+	@Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "{email.invalid.format}")
 	private String email;
 }

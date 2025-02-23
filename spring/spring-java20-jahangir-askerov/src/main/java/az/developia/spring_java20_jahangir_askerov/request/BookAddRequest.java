@@ -19,29 +19,29 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BookAddRequest {
-	@NotNull(message = "The name part of the book cannot be empty")
-	@Size(min = 3, max = 80, message = "The name of the book can contain a minimum of 3 and a maximum of 80 characters")
+	@NotNull(message = "{field.empty}")
+	@Size(min = 3, max = 80, message = "{field.length.invalid}")
 	private String name;
 
-	@NotNull(message = "The author part of the book cannot be empty")
-	@Size(min = 2, max = 40, message = "The author of the book can contain a minimum of 2 and a maximum of 40 characters")
+	@NotNull(message = "{field.empty}")
+	@Size(min = 2, max = 40, message = "{field.length.invalid}")
 	private String author;
 
-	@NotNull(message = "The price part of the book cannot be empty")
-	@PositiveOrZero(message = "The price of the book cannot be negative")
-	@Digits(integer = Integer.MAX_VALUE, fraction = 2, message = "The fractional part for the price of the book can be a maximum of 2 digits")
+	@NotNull(message = "{field.empty}")
+	@PositiveOrZero(message = "Price cannot be negative")
+	@Digits(integer = Integer.MAX_VALUE, fraction = 2, message = "{price.fraction.invalid}")
 	private BigDecimal price;
 
-	@NotBlank(message = "The description part of the book cannot be empty")
+	@NotBlank(message = "{field.empty}")
 	private String description;
 
 	private String color;
 
-	@NotNull(message = "The page count part of the book cannot be empty")
-	@Min(value = 10, message = "The book should contain at least 10 pages")
+	@NotNull(message = "{field.empty}")
+	@Min(value = 10, message = "{pages.min}")
 	private Integer pageCount;
 
-	@NotNull(message = "The page count part of the book cannot be empty")
+	@NotNull(message = "{cannot.be.empty}")
 	@Past(message = "Publish date must be in the past")
 	private LocalDate publishDate;
 

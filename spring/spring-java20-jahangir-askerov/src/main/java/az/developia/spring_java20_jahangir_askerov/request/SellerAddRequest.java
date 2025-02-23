@@ -16,29 +16,29 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SellerAddRequest {
-	@NotNull(message = "The name part of the seller cannot be empty")
-	@Size(min = 3, max = 40, message = "The name of the seller can contain a minimum of 3 and a maximum of 40 characters")
+	@NotNull(message = "{field.empty}")
+	@Size(min = 3, max = 40, message = "{field.length.invalid}")
 	private String name;
 
-	@NotNull(message = "The surname part of the seller cannot be empty")
-	@Size(min = 3, max = 40, message = "The surname of the seller can contain a minimum of 3 and a maximum of 40 characters")
+	@NotNull(message = "{field.empty}")
+	@Size(min = 3, max = 40, message = "{field.length.invalid}")
 	private String surname;
 
-	@NotNull
-	@Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "The email format is incorrect, please check and try again")
+	@NotNull(message = "{field.empty}")
+	@Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "{email.invalid.format}")
 	private String email;
 
-	@NotNull(message = "The age part of the seller cannot be empty")
-	@Min(value = 18, message = "You must be at least 18 years old to be able to sell a book")
+	@NotNull(message = "{field.empty}")
+	@Min(value = 18, message = "{user.age.min}")
 	private Integer age;
 
-	@NotNull(message = "The address part of the seller cannot be empty")
 	@Valid
 	@Embedded
+	@NotNull(message = "{field.empty}")
 	private Address address;
 
-	@NotNull(message = "The username part of the seller cannot be empty")
-	@Size(min = 2, max = 40, message = "The username of the seller can contain a minimum of 2 and a maximum of 40 characters")
+	@NotNull(message = "{field.empty}")
+	@Size(min = 2, max = 40, message = "{field.length.invalid}")
 	private String username;
 
 	@ValidPassword

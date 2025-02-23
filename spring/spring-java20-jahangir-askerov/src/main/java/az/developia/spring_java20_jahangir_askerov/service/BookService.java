@@ -13,6 +13,7 @@ import az.developia.spring_java20_jahangir_askerov.model.BookEntity;
 import az.developia.spring_java20_jahangir_askerov.repository.BookRepository;
 import az.developia.spring_java20_jahangir_askerov.request.BookAddRequest;
 import az.developia.spring_java20_jahangir_askerov.request.BookUpdateRequest;
+import az.developia.spring_java20_jahangir_askerov.response.BookAddResponse;
 import az.developia.spring_java20_jahangir_askerov.response.BookListResponse;
 import az.developia.spring_java20_jahangir_askerov.response.BookSingleResponse;
 import az.developia.spring_java20_jahangir_askerov.util.FileContentReader;
@@ -28,48 +29,48 @@ public class BookService {
 	@Autowired
 	private ModelMapper modelMapper;
 
-	public BookListResponse getAllBooks() {
+	public BookAddResponse create(BookAddRequest book) {
+		BookEntity bookEntity = modelMapper.map(book, BookEntity.class);
+		repository.save(bookEntity);
+		return new BookAddResponse(bookEntity.getId());
+	}
+
+	public BookListResponse getAll() {
 		List<BookEntity> allBooks = repository.findAll();
-		List<BookSingleResponse> customAllBooks = new ArrayList<BookSingleResponse>();
+		List<BookSingleResponse> mappedBooks = new ArrayList<BookSingleResponse>();
 		for (BookEntity book : allBooks) {
-			BookSingleResponse bookSingleResponse = new BookSingleResponse();
-			modelMapper.map(book, bookSingleResponse);
-			customAllBooks.add(bookSingleResponse);
+			BookSingleResponse resp = modelMapper.map(book, BookSingleResponse.class);
+			mappedBooks.add(resp);
 		}
 		BookListResponse books = new BookListResponse();
-		books.setBooks(customAllBooks);
+		books.setBooks(mappedBooks);
 		return books;
 	}
 
-	public Integer createNewBook(BookAddRequest book) {
-		BookEntity bookEntity = new BookEntity();
-		modelMapper.map(book, bookEntity);
-		repository.save(bookEntity);
-		return bookEntity.getId();
-	}
-
-	public BookSingleResponse getBookById(Integer id) {
+	public BookSingleResponse getById(Integer id) {
 		Optional<BookEntity> optionalBook = repository.findById(id);
 		if (optionalBook.isEmpty()) {
 			throw new NotFoundException(contentReader.readFromFile("idNotFound.txt"));
 		}
 
-		BookSingleResponse customBook = new BookSingleResponse();
 		BookEntity book = optionalBook.get();
-		modelMapper.map(book, customBook);
+		BookSingleResponse customBook = modelMapper.map(book, BookSingleResponse.class);
 		return customBook;
 	}
 
-	public void deleteBookById(Integer id) {
-		Optional<BookEntity> optionalBook = repository.findById(id);
-		if (optionalBook.isEmpty()) {
-			throw new NotFoundException(contentReader.readFromFile("idNotFound.txt"));
+	public BookListResponse getByName(String q) {
+		List<BookEntity> searchedBooks = repository.findAllByNameContaining(q);
+		List<BookSingleResponse> mappedBooks = new ArrayList<BookSingleResponse>();
+		for (BookEntity book : searchedBooks) {
+			BookSingleResponse resp = modelMapper.map(book, BookSingleResponse.class);
+			mappedBooks.add(resp);
 		}
-
-		repository.deleteById(id);
+		BookListResponse books = new BookListResponse();
+		books.setBooks(mappedBooks);
+		return books;
 	}
 
-	public void updateBookById(Integer id, BookUpdateRequest book) {
+	public void updateById(Integer id, BookUpdateRequest book) {
 		Optional<BookEntity> optionalBook = repository.findById(id);
 		if (optionalBook.isEmpty()) {
 			throw new NotFoundException(contentReader.readFromFile("idNotFound.txt"));
@@ -83,16 +84,13 @@ public class BookService {
 
 	}
 
-	public BookListResponse getBooksByName(String query) {
-		List<BookEntity> searchedBooks = repository.findAllByNameContaining(query);
-		List<BookSingleResponse> customSearchedBooks = new ArrayList<BookSingleResponse>();
-		for (BookEntity book : searchedBooks) {
-			BookSingleResponse bookSingleResponse = new BookSingleResponse();
-			modelMapper.map(book, bookSingleResponse);
-			customSearchedBooks.add(bookSingleResponse);
+	public void deleteById(Integer id) {
+		Optional<BookEntity> optionalBook = repository.findById(id);
+		if (optionalBook.isEmpty()) {
+			throw new NotFoundException(contentReader.readFromFile("idNotFound.txt"));
 		}
-		BookListResponse books = new BookListResponse();
-		books.setBooks(customSearchedBooks);
-		return books;
+
+		repository.deleteById(id);
 	}
+
 }
