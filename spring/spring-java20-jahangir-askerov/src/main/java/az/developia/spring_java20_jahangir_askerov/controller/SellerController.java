@@ -57,6 +57,13 @@ public class SellerController {
 		return ResponseEntity.ok(service.getByName(q));
 	}
 
+	@GetMapping
+	public ResponseEntity<SellerListResponse> getPaginated(
+			@RequestParam(value = "page", defaultValue = "1") Integer page,
+			@RequestParam(value = "size", defaultValue = "3") Integer size) {
+		return ResponseEntity.ok(service.getPaginated(page, size));
+	}
+
 	@PutMapping(path = "/{id}")
 	public ResponseEntity<?> updateByID(@PathVariable Integer id, @Valid @RequestBody SellerUpdateRequest req,
 			BindingResult br) {

@@ -70,6 +70,22 @@ public class BookService {
 		return books;
 	}
 
+	public BookListResponse getPaginated(Integer page, Integer size) {
+		if (page < 1) {
+			throw new NotFoundException(contentReader.readFromFile("invalidPagination.txt"));
+		}
+		page = (page - 1) * size;
+		List<BookEntity> paginatedBooks = repository.getPaginated(page, size);
+		List<BookSingleResponse> mappedBooks = new ArrayList<BookSingleResponse>();
+		for (BookEntity book : paginatedBooks) {
+			BookSingleResponse resp = modelMapper.map(book, BookSingleResponse.class);
+			mappedBooks.add(resp);
+		}
+		BookListResponse books = new BookListResponse();
+		books.setBooks(mappedBooks);
+		return books;
+	}
+
 	public void updateById(Integer id, BookUpdateRequest book) {
 		Optional<BookEntity> optionalBook = repository.findById(id);
 		if (optionalBook.isEmpty()) {

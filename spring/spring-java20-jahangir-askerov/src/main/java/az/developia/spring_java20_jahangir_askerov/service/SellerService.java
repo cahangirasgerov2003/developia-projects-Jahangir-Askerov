@@ -71,6 +71,23 @@ public class SellerService {
 		return sellers;
 	}
 
+	public SellerListResponse getPaginated(Integer page, Integer size) {
+		if (page < 1) {
+			throw new NotFoundException(contentReader.readFromFile("invalidPagination.txt"));
+		}
+		page = (page - 1) * size;
+		List<SellerEntity> paginatedSellers = repository.getPaginated(page, size);
+		List<SellerSingleResponse> mappedSellers = new ArrayList<SellerSingleResponse>();
+		for (SellerEntity seller : paginatedSellers) {
+			SellerSingleResponse resp = modelMapper.map(seller, SellerSingleResponse.class);
+			mappedSellers.add(resp);
+		}
+
+		SellerListResponse sellers = new SellerListResponse();
+		sellers.setSellers(mappedSellers);
+		return sellers;
+	}
+
 	public void updateByID(Integer id, SellerUpdateRequest seller) {
 		Optional<SellerEntity> optionalSeller = repository.findById(id);
 		if (optionalSeller.isEmpty()) {

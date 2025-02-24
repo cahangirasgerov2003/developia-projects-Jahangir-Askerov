@@ -59,6 +59,12 @@ public class BookController {
 		return ResponseEntity.ok(service.getByName(q));
 	}
 
+	@GetMapping
+	public ResponseEntity<BookListResponse> getPaginated(@RequestParam(name = "page", defaultValue = "1") Integer page,
+			@RequestParam(name = "size", defaultValue = "3") Integer size) {
+		return ResponseEntity.ok(service.getPaginated(page, size));
+	}
+
 	@PutMapping(path = "/{id}")
 	public ResponseEntity<?> updateById(@PathVariable Integer id, @Valid @RequestBody BookUpdateRequest req,
 			BindingResult br) {

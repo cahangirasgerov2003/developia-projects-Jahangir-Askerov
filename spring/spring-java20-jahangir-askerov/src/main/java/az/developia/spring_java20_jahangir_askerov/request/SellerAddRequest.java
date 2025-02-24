@@ -2,6 +2,7 @@ package az.developia.spring_java20_jahangir_askerov.request;
 
 import az.developia.spring_java20_jahangir_askerov.model.Address;
 import az.developia.spring_java20_jahangir_askerov.validation.ValidPassword;
+import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
@@ -39,6 +40,7 @@ public class SellerAddRequest {
 
 	@NotNull(message = "{field.empty}")
 	@Size(min = 2, max = 40, message = "{field.length.invalid}")
+	@Column(unique = true)
 	private String username;
 
 	@ValidPassword

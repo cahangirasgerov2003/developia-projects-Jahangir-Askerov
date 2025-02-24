@@ -2,6 +2,7 @@ package az.developia.spring_java20_jahangir_askerov.request;
 
 import az.developia.spring_java20_jahangir_askerov.model.Address;
 import az.developia.spring_java20_jahangir_askerov.validation.ValidPassword;
+import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -20,6 +21,7 @@ public class SellerUpdateRequest {
 	private Address address;
 
 	@NotNull(message = "{field.empty}")
+	@Column(unique = true)
 	private String username;
 
 	@ValidPassword
