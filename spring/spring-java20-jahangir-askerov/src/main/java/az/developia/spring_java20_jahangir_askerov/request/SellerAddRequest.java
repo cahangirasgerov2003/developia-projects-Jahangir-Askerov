@@ -40,7 +40,7 @@ public class SellerAddRequest {
 
 	@NotNull(message = "{field.empty}")
 	@Size(min = 2, max = 40, message = "{field.length.invalid}")
-	@Column(unique = true)
+	@Column(unique = true, nullable = false)
 	private String username;
 
 	@ValidPassword

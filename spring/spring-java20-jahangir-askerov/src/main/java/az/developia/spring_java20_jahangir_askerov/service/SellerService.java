@@ -13,9 +13,11 @@ import az.developia.spring_java20_jahangir_askerov.exception.NotFoundException;
 import az.developia.spring_java20_jahangir_askerov.repository.SellerRepository;
 import az.developia.spring_java20_jahangir_askerov.request.SellerAddRequest;
 import az.developia.spring_java20_jahangir_askerov.request.SellerUpdateRequest;
+import az.developia.spring_java20_jahangir_askerov.response.AuthoritiesAddResponse;
 import az.developia.spring_java20_jahangir_askerov.response.SellerAddResponse;
 import az.developia.spring_java20_jahangir_askerov.response.SellerListResponse;
 import az.developia.spring_java20_jahangir_askerov.response.SellerSingleResponse;
+import az.developia.spring_java20_jahangir_askerov.response.UserAddResponse;
 import az.developia.spring_java20_jahangir_askerov.util.FileContentReader;
 
 @RestController
@@ -30,10 +32,29 @@ public class SellerService {
 	@Autowired
 	private ModelMapper modelMapper;
 
+	@Autowired
+	private UserService userService;
+
+	@Autowired
+	private AuthorityService authorityService;
+
 	public SellerAddResponse create(SellerAddRequest seller) {
+		String username = seller.getUsername();
+//		Check if a user exists based on their user name
+		userService.existsByUsername(username);
+
+//		Add user data to users table
+		UserAddResponse userAddResponse = userService.addSeller(seller);
+
+//		Add seller data to seller table
 		SellerEntity sellerEntity = modelMapper.map(seller, SellerEntity.class);
+		sellerEntity.setUser_id(userAddResponse.getId());
 		repository.save(sellerEntity);
-		return new SellerAddResponse(sellerEntity.getId());
+
+//		Add authorities data to authorities table
+		AuthoritiesAddResponse authoritiesAddResponse = authorityService.addSellerAuthorities(username);
+
+		return new SellerAddResponse(sellerEntity.getId(), userAddResponse, authoritiesAddResponse);
 	}
 
 	public SellerListResponse getAll() {

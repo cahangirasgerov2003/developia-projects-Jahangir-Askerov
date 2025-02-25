@@ -7,8 +7,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.RestController;
 
 import az.developia.spring_java20_jahangir_askerov.entity.BookEntity;
+import jakarta.transaction.Transactional;
 
 @RestController
+@Transactional
 public interface BookRepository extends JpaRepository<BookEntity, Integer> {
 //	Query method
 	public abstract List<BookEntity> findAllByNameContaining(String name);

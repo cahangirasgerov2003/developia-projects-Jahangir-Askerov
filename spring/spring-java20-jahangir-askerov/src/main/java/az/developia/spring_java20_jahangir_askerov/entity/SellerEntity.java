@@ -31,7 +31,5 @@ public class SellerEntity {
 
 	private Address address;
 
-	private String username;
-
-	private String password;
+	private Integer user_id;
 }

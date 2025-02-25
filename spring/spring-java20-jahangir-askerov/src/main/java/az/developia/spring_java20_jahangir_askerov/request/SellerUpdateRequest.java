@@ -7,6 +7,7 @@ import jakarta.persistence.Embedded;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,7 +22,8 @@ public class SellerUpdateRequest {
 	private Address address;
 
 	@NotNull(message = "{field.empty}")
-	@Column(unique = true)
+	@Size(min = 2, max = 40, message = "{field.length.invalid}")
+	@Column(unique = true, nullable = false)
 	private String username;
 
 	@ValidPassword

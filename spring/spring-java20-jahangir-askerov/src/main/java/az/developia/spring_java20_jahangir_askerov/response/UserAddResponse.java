@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SellerAddResponse {
-	private Integer id;
-	private UserAddResponse user_id;
-	private AuthoritiesAddResponse affectedRows;
+public class UserAddResponse {
+	Integer id;
 }

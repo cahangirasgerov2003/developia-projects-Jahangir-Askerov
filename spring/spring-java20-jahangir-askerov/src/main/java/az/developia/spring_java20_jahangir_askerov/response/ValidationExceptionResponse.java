@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class ValidationExceptionResponse {
-	private String Message;
+	private String message;
 	private List<ValidationFieldError> fieldErrors;
 	private LocalDate errorOccurrenceTime;
 }

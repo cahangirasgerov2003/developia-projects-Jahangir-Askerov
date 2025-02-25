@@ -1,5 +1,7 @@
 package az.developia.spring_java20_jahangir_askerov.response;
 
+import java.time.LocalDate;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,8 +9,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SellerAddResponse {
-	private Integer id;
-	private UserAddResponse user_id;
-	private AuthoritiesAddResponse affectedRows;
+public class UserAlreadyExistsExceptionResponse {
+	private String message;
+	private LocalDate errorOccurrenceTime;
+	private String username;
 }

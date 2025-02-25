@@ -1,5 +1,6 @@
 package az.developia.spring_java20_jahangir_askerov.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,7 +12,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "/authorities")
+@Table(name = "authorities")
 
 @Data
 @NoArgsConstructor
@@ -23,7 +24,8 @@ public class AuthorityEntity {
 
 	private String username;
 
-	@NotNull(message = "Authority cannot be null")
+	@NotNull(message = "Authority cannot be null !")
+	@Column(nullable = false)
 	private String authority;
 
 }
