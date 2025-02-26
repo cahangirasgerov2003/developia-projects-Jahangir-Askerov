@@ -111,13 +111,18 @@ public class SellerService {
 
 	public void updateByID(Integer id, SellerUpdateRequest seller) {
 		Optional<SellerEntity> optionalSeller = repository.findById(id);
+
 		if (optionalSeller.isEmpty()) {
 			throw new NotFoundException(contentReader.readFromFile("idNotFound.txt"));
 		}
 
 		SellerEntity existingSeller = optionalSeller.get();
+
 		modelMapper.map(seller, existingSeller);
 
+
+		userService.updateSellerByID(existingSeller.getUser_id(), seller);
+		
 		repository.save(existingSeller);
 	}
 

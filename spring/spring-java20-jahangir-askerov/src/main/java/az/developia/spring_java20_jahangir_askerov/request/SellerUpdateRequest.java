@@ -29,6 +29,9 @@ public class SellerUpdateRequest {
 	@ValidPassword
 	private String password;
 
+	@ValidPassword
+	private String current_password;
+
 	@NotNull(message = "{field.empty}")
 	@Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "{email.invalid.format}")
 	private String email;

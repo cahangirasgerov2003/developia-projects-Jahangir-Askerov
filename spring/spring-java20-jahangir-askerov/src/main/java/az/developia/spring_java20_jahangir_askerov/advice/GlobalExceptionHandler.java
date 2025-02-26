@@ -10,11 +10,13 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import az.developia.spring_java20_jahangir_askerov.exception.MyException;
 import az.developia.spring_java20_jahangir_askerov.exception.NotFoundException;
 import az.developia.spring_java20_jahangir_askerov.exception.UserAlreadyExistsException;
 import az.developia.spring_java20_jahangir_askerov.exception.ValidationException;
 import az.developia.spring_java20_jahangir_askerov.model.ValidationFieldError;
 import az.developia.spring_java20_jahangir_askerov.response.AuthorizationDeniedExceptionResponse;
+import az.developia.spring_java20_jahangir_askerov.response.MyExceptionResponse;
 import az.developia.spring_java20_jahangir_askerov.response.NotFoundExceptionResponse;
 import az.developia.spring_java20_jahangir_askerov.response.UserAlreadyExistsExceptionResponse;
 import az.developia.spring_java20_jahangir_askerov.response.ValidationExceptionResponse;
@@ -58,6 +60,14 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(AuthorizationDeniedException.class)
 	public AuthorizationDeniedExceptionResponse handleException(AuthorizationDeniedException e) {
 		AuthorizationDeniedExceptionResponse resp = new AuthorizationDeniedExceptionResponse();
+		resp.setErrorOccurrenceTime(LocalDate.now());
+		resp.setMessage(e.getMessage());
+		return resp;
+	}
+
+	@ExceptionHandler(MyException.class)
+	public MyExceptionResponse handleException(MyException e) {
+		MyExceptionResponse resp = new MyExceptionResponse();
 		resp.setErrorOccurrenceTime(LocalDate.now());
 		resp.setMessage(e.getMessage());
 		return resp;
