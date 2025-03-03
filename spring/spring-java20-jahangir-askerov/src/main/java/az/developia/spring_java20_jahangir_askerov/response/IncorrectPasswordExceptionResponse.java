@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MyExceptionResponse {
+public class IncorrectPasswordExceptionResponse {
 	private String message;
 	private LocalDate errorOccurrenceTime;
 }

@@ -120,9 +120,8 @@ public class SellerService {
 
 		modelMapper.map(seller, existingSeller);
 
-
 		userService.updateSellerByID(existingSeller.getUser_id(), seller);
-		
+
 		repository.save(existingSeller);
 	}
 

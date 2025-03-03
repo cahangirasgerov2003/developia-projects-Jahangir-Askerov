@@ -1,5 +1,7 @@
 package az.developia.spring_java20_jahangir_askerov.entity;
 
+import java.time.LocalDate;
+
 import az.developia.spring_java20_jahangir_askerov.model.Address;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,7 +29,7 @@ public class SellerEntity {
 
 	private String email;
 
-	private Integer age;
+	private LocalDate birthday;
 
 	private Address address;
 

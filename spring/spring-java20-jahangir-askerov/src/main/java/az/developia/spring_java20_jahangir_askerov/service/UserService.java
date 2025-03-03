@@ -8,7 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RestController;
 
 import az.developia.spring_java20_jahangir_askerov.entity.UserEntity;
-import az.developia.spring_java20_jahangir_askerov.exception.MyException;
+import az.developia.spring_java20_jahangir_askerov.exception.IncorrectPasswordException;
 import az.developia.spring_java20_jahangir_askerov.exception.NotFoundException;
 import az.developia.spring_java20_jahangir_askerov.exception.UserAlreadyExistsException;
 import az.developia.spring_java20_jahangir_askerov.repository.UserRepository;
@@ -28,7 +28,7 @@ public class UserService {
 
 	@Autowired
 	private ModelMapper modelMapper;
-	
+
 	private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 	public UserAddResponse addSeller(SellerAddRequest seller) {
@@ -43,7 +43,7 @@ public class UserService {
 	}
 
 	public void updateSellerByID(Integer user_id, SellerUpdateRequest seller) {
-		
+
 		Optional<UserEntity> optionalSeller = repository.findById(user_id);
 		if (optionalSeller.isEmpty()) {
 			throw new NotFoundException(contentReader.readFromFile("idNotFound.txt"));
@@ -55,11 +55,11 @@ public class UserService {
 		System.out.println(existingSeller.getPassword());
 
 		if (!(passwordEncoder.matches(seller.getCurrent_password(), existingSeller.getPassword().substring(8)))) {
-			throw new MyException(contentReader.readFromFile("currentPasswordIncorrect.txt"));
+			throw new IncorrectPasswordException(contentReader.readFromFile("currentPasswordIncorrect.txt"));
 		}
 
 		System.out.println("Good");
-		
+
 		modelMapper.map(seller, existingSeller);
 
 		String newPassword = passwordEncoder.encode(seller.getPassword());

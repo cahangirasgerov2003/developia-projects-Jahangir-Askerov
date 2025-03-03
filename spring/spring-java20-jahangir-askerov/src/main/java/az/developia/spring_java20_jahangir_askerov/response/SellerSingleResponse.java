@@ -1,5 +1,7 @@
 package az.developia.spring_java20_jahangir_askerov.response;
 
+import java.time.LocalDate;
+
 import az.developia.spring_java20_jahangir_askerov.model.Address;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,7 +19,7 @@ public class SellerSingleResponse {
 
 	private String email;
 
-	private Integer age;
+	private LocalDate birthday;
 
 	private Address address;
 

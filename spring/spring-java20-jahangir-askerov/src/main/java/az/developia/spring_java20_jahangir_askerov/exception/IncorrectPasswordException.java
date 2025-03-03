@@ -7,14 +7,14 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class MyException extends RuntimeException {
+public class IncorrectPasswordException extends RuntimeException {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public MyException(String message) {
+	public IncorrectPasswordException(String message) {
 		super(message);
 	}
 

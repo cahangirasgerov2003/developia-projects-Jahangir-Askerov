@@ -1,12 +1,14 @@
 package az.developia.spring_java20_jahangir_askerov.request;
 
+import java.time.LocalDate;
+
 import az.developia.spring_java20_jahangir_askerov.model.Address;
 import az.developia.spring_java20_jahangir_askerov.validation.ValidPassword;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -30,8 +32,8 @@ public class SellerAddRequest {
 	private String email;
 
 	@NotNull(message = "{field.empty}")
-	@Min(value = 18, message = "{user.age.min}")
-	private Integer age;
+	@Past(message = "{user.birthday}")
+	private LocalDate birthday;
 
 	@Valid
 	@Embedded
