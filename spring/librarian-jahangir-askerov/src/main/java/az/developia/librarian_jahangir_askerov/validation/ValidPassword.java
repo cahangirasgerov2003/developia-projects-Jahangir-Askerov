@@ -1,4 +1,4 @@
-package az.developia.spring_java20_jahangir_askerov.validation;
+package az.developia.librarian_jahangir_askerov.validation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -9,19 +9,14 @@ import java.lang.annotation.Target;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
-@Documented 
+@Documented
 @Constraint(validatedBy = PasswordValidator.class)
-@Target({ ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER, ElementType.ANNOTATION_TYPE })
+@Target({ ElementType.ANNOTATION_TYPE, ElementType.FIELD, ElementType.PARAMETER, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidPassword {
-
-	// ? - wild cards
-	// Class <?> generic type
-
 	String message() default "The password format is incorrect";
 
 	Class<?>[] groups() default {};
 
 	Class<? extends Payload>[] payload() default {};
-
 }

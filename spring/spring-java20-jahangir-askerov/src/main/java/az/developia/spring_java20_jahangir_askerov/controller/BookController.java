@@ -41,7 +41,7 @@ public class BookController {
 			throw new ValidationException(contentReader.readFromFile("validationMessage.txt"), br);
 		}
 		return new ResponseEntity<BookAddResponse>(service.create(req), HttpStatus.CREATED);
-	}
+	} 
 
 	@GetMapping(path = "/all")
 	@PreAuthorize(value = "hasAuthority('ROLE_GET_BOOKS')")

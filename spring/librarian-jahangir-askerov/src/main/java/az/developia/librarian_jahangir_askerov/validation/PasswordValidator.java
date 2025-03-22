@@ -1,24 +1,15 @@
-package az.developia.spring_java20_jahangir_askerov.validation;
+package az.developia.librarian_jahangir_askerov.validation;
 
 import org.springframework.stereotype.Component;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
- 
+
 @Component
 public class PasswordValidator implements ConstraintValidator<ValidPassword, String> {
 
 	@Override
-	public void initialize(ValidPassword constraintAnnotation) {
-		// You can get access to the annotation attributes here if needed
-		// For example:
-		String message = constraintAnnotation.message();
-		System.out.println(message);
-	}
-
-	@Override
 	public boolean isValid(String password, ConstraintValidatorContext context) {
-
 		if (password == null) {
 			context.disableDefaultConstraintViolation();
 			context.buildConstraintViolationWithTemplate("{cannot.be.empty}").addConstraintViolation();
@@ -64,4 +55,5 @@ public class PasswordValidator implements ConstraintValidator<ValidPassword, Str
 
 		return valid;
 	}
+
 }
