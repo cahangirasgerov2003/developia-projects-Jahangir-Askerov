@@ -25,7 +25,7 @@ import az.developia.spring_java20_jahangir_askerov.util.FileContentReader;
 import jakarta.validation.Valid;
 
 @RestController // Inversion of control
-@RequestMapping(path = "sellers")
+@RequestMapping(path = "/sellers")
 public class SellerController {
 	@Autowired // Dependency injection
 	private SellerService service;

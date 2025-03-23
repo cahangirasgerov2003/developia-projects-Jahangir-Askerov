@@ -4,16 +4,12 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.web.bind.annotation.RestController;
 
 import az.developia.librarian_jahangir_askerov.entity.PermissionEntity;
-import jakarta.transaction.Transactional;
 
-@RestController
-@Transactional
 public interface PermissionRepository extends JpaRepository<PermissionEntity, Integer> {
 
-//	Query method
+//	Method query
 	public abstract List<PermissionEntity> findAllByAuthorityContaining(String name);
 
 //	Native query

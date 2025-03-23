@@ -12,10 +12,9 @@ public class ApplicationConfig {
 	public ModelMapper modelMapper() {
 		return new ModelMapper();
 	}
-	
+
 	@Bean
 	public FileContentReader contentReader() {
 		return new FileContentReader();
 	}
 }
- 

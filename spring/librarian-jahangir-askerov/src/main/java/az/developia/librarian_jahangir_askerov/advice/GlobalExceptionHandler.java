@@ -20,7 +20,7 @@ public class GlobalExceptionHandler {
 	public MyExceptionResponse handleException(MyException e) {
 		BindingResult br = e.getBr();
 		List<ValidationFieldError> errs = new ArrayList<ValidationFieldError>();
-		if(br != null) {
+		if (br != null) {
 			List<FieldError> fieldErrors = br.getFieldErrors();
 			for (FieldError err : fieldErrors) {
 				ValidationFieldError error = new ValidationFieldError(err.getField(), err.getDefaultMessage());

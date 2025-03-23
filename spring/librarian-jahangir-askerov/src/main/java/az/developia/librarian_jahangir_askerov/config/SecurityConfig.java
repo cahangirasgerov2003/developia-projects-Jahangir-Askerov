@@ -42,7 +42,7 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		return http.csrf(csrf -> csrf.disable()).cors(Customizer.withDefaults())
 				.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.OPTIONS, "**/").permitAll()
-						.requestMatchers("/permissions/**").permitAll().anyRequest().authenticated())
+						.requestMatchers(HttpMethod.POST, "/librarians").permitAll().anyRequest().authenticated())
 				.httpBasic(Customizer.withDefaults()).build();
 	}
 }
