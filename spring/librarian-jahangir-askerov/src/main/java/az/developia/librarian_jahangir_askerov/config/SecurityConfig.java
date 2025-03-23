@@ -40,8 +40,9 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		return http.csrf(csrf -> csrf.disable()).cors(Customizer.withDefaults()).authorizeHttpRequests(
-				auth -> auth.requestMatchers(HttpMethod.OPTIONS, "**/").permitAll().anyRequest().authenticated())
+		return http.csrf(csrf -> csrf.disable()).cors(Customizer.withDefaults())
+				.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.OPTIONS, "**/").permitAll()
+						.requestMatchers(HttpMethod.POST, "/permissions").permitAll().anyRequest().authenticated())
 				.httpBasic(Customizer.withDefaults()).build();
 	}
 }

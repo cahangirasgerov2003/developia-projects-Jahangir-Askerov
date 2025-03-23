@@ -3,6 +3,7 @@ package az.developia.librarian_jahangir_askerov.request;
 import java.time.LocalDate;
 
 import az.developia.librarian_jahangir_askerov.model.Address;
+import az.developia.librarian_jahangir_askerov.validation.ValidBirthday;
 import az.developia.librarian_jahangir_askerov.validation.ValidPassword;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
@@ -34,6 +35,7 @@ public class LibrarianAddRequest {
 	@NotBlank(message = "{field.empty}")
 	private String phone;
 
+	@ValidBirthday
 	private LocalDate birthday;
  
 	@Valid
