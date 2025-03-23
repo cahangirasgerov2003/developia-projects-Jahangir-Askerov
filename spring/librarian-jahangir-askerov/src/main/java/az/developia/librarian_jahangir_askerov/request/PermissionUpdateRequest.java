@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PermissionAddRequest {
+public class PermissionUpdateRequest {
 
 	@Pattern(regexp = "^ROLE(?:_[A-Z]+)+$", message = "{permission.invalid.format}")
 	private String authority;
@@ -18,7 +18,5 @@ public class PermissionAddRequest {
 	@Min(value = 0, message = "Minimum value must be 0")
 	@Max(value = 1, message = "Maximum value must be 1")
 	private Integer librarian;
-	
-	private Integer admin;
+
 }
- 
