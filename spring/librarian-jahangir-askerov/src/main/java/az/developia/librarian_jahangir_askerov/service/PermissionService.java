@@ -32,6 +32,15 @@ public class PermissionService {
 	private FileContentReader contentReader;
 
 	public PermissionAddResponse add(PermissionAddRequest req) {
+		String authorityName = req.getAuthority();
+//		Check if a authority exists based on their authority name
+		Boolean authorityExists = repository.existsByAuthority(authorityName);
+
+		if (authorityExists) {
+			throw new MyException(contentReader.readFromFile("authorityAlreadyExists.txt"), null,
+					"AuthorityAlreadyExistsException");
+		}
+
 		PermissionEntity permission = modelMapper.map(req, PermissionEntity.class);
 		repository.save(permission);
 

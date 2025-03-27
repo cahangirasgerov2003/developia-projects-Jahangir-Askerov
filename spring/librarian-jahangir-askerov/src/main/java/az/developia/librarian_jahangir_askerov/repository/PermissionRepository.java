@@ -12,6 +12,8 @@ public interface PermissionRepository extends JpaRepository<PermissionEntity, In
 //	Method query
 	public abstract List<PermissionEntity> findAllByAuthorityContaining(String name);
 
+	public abstract Boolean existsByAuthority(String authorityName);
+
 //	Native query
 	@Query(value = "Select * from permissions limit ?1, ?2", nativeQuery = true)
 	public abstract List<PermissionEntity> findAllPaginated(Integer page, Integer size);

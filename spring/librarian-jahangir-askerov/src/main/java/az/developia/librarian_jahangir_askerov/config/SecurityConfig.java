@@ -43,6 +43,7 @@ public class SecurityConfig {
 		return http.csrf(csrf -> csrf.disable()).cors(Customizer.withDefaults())
 				.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.OPTIONS, "**/").permitAll()
 						.requestMatchers(HttpMethod.POST, "/librarians").permitAll().anyRequest().authenticated())
-				.httpBasic(Customizer.withDefaults()).build();
+				.httpBasic(Customizer.withDefaults())
+				.headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable())).build();
 	}
 }

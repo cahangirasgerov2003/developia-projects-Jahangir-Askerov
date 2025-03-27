@@ -1,7 +1,10 @@
 package az.developia.librarian_jahangir_askerov.service;
 
+import java.util.Optional;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -43,6 +46,22 @@ public class UserService {
 		repository.save(userEntity);
 
 		return new UserAddResponse(userEntity.getId());
+	}
+
+	public String findOperatorUsername() {
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		return username;
+	}
+
+	public UserEntity findOperatorByUsername(String username) {
+		Optional<UserEntity> op = repository.findByUsername(username);
+		if (op.isPresent()) {
+			return op.get();
+		} else {
+			throw new MyException("User not found", null, "UserNotFoundException");
+
+		}
+
 	}
 
 }
