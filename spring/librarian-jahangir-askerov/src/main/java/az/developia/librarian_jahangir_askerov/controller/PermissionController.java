@@ -41,11 +41,15 @@ public class PermissionController {
 		if (br.hasErrors()) {
 			throw new MyException(contentReader.readFromFile("validationException.txt"), br, "ValidationException");
 		}
+		
+//		Check if a permission with the given authority name already exists
+		service.existsByAuthority(req.getAuthority());
+		
 		return new ResponseEntity<PermissionAddResponse>(service.add(req), HttpStatus.CREATED);
 	}
 
 	@GetMapping
-	@PreAuthorize(value = "hasAuthority('ROLE_FIND_ALL_PERMISSION')")
+	@PreAuthorize(value = "hasAuthority('ROLE_FIND_ALL_PERMISSIONS')")
 	public ResponseEntity<PermissionListResponse> findAll() {
 		return ResponseEntity.ok(service.findAll());
 	}
@@ -57,13 +61,13 @@ public class PermissionController {
 	}
 
 	@GetMapping("/search")
-	@PreAuthorize(value = "hasAuthority('ROLE_SEARCH_PERMISSION')")
+	@PreAuthorize(value = "hasAuthority('ROLE_SEARCH_PERMISSIONS')")
 	public ResponseEntity<PermissionListResponse> findByName(@RequestParam(name = "name", defaultValue = "") String q) {
 		return ResponseEntity.ok(service.findByName(q));
 	}
 
 	@GetMapping("/paginate")
-	@PreAuthorize(value = "hasAuthority('ROLE_PAGINATE_PERMISSION')")
+	@PreAuthorize(value = "hasAuthority('ROLE_PAGINATE_PERMISSIONS')")
 	public ResponseEntity<PermissionListResponse> findAllPaginated(
 			@RequestParam(name = "page", defaultValue = "1") Integer page,
 			@RequestParam(name = "size", defaultValue = "3") Integer size) {
@@ -84,7 +88,10 @@ public class PermissionController {
 		if (br.hasErrors()) {
 			throw new MyException(contentReader.readFromFile("validationException.txt"), br, "ValidationException");
 		}
+		
+//		Check if the updated permission name already exists in the database
+		
 		service.updateById(id, req);
 		return ResponseEntity.noContent().build();
-	}
+	} 
 }

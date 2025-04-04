@@ -1,16 +1,16 @@
 insert into permissions (authority, admin, librarian) values 
 ('ROLE_ADD_PERMISSION', 1, 0), 
-('ROLE_FIND_ALL_PERMISSION', 1, 0),
+('ROLE_FIND_ALL_PERMISSIONS', 1, 0),
 ('ROLE_FIND_BY_ID_PERMISSION', 1, 0), 
-('ROLE_SEARCH_PERMISSION', 1, 0),
-('ROLE_PAGINATE_PERMISSION', 1, 0), 
+('ROLE_SEARCH_PERMISSIONS', 1, 0),
+('ROLE_PAGINATE_PERMISSIONS', 1, 0), 
 ('ROLE_DELETE_PERMISSION', 1, 0), 
 ('ROLE_UPDATE_PERMISSION', 1, 0),
 ('ROLE_ADD_BOOK', 0, 1), 
 ('ROLE_FIND_ALL_BOOKS', 0, 1),
 ('ROLE_FIND_BY_ID_BOOK', 0, 1), 
-('ROLE_SEARCH_BOOK', 0, 1),
-('ROLE_PAGINATE_BOOK', 0, 1), 
+('ROLE_SEARCH_BOOKS', 0, 1),
+('ROLE_PAGINATE_BOOKS', 0, 1), 
 ('ROLE_DELETE_BOOK', 0, 1), 
 ('ROLE_UPDATE_BOOK', 0, 1);
 
@@ -25,10 +25,10 @@ insert into users (username, password, enabled, active, type) values
 ('l2', '{noop}1', 1, 1, 'librarian');
 
 insert into books (name, price, author, description, color, page_count, publish_date, operator_id ) values
-('Abb', '25', 'GEORGE ORWELL', 'It tells the story of Winston Smith', 'red', '212', '2001-01-12', 2 ),
-('Add', '25', 'GEORGE ORWELL', 'It tells the story of Winston Smith', 'red', '212', '2001-01-12', 2 ),
-('Acc', '25', 'GEORGE ORWELL', 'It tells the story of Winston Smith', 'red', '212', '2001-01-12', 2 ),
-('ABB', '25', 'GEORGE ORWELL', 'It tells the story of Winston Smith', 'red', '212', '2001-01-12', 3 );
+('1984', '25', 'GEORGE ORWELL', 'It tells the story of Winston Smith', 'red', '212', '2001-01-12', 2 ),
+('Moby-Dick', '70', 'GEORGE ORWELL', 'It tells the story of Winston Smith', 'black', '289', '2003-03-12', 2 ),
+('Pride and Prejudice', '10', 'GEORGE ORWELL', 'It tells the story of Winston Smith', 'green', '101', '2021-05-12', 2 ),
+('Don Quixote', '120', 'GEORGE ORWELL', 'It tells the story of Winston Smith', 'green', '567', '2011-07-12', 3 );
 
 
 insert into authorities (username, authority) select 'a1', authority from permissions where admin=1;

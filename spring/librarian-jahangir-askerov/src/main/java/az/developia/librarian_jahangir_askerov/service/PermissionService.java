@@ -120,11 +120,22 @@ public class PermissionService {
 			throw new MyException(contentReader.readFromFile("idNotFound.txt"), null, "EntityNotFoundException");
 		}
 
+		this.existsByAuthority(req.getAuthority());
+
 		PermissionEntity existingPermission = optional.get();
 
 		modelMapper.map(req, existingPermission);
 
 		repository.save(existingPermission);
+	}
+
+	public void existsByAuthority(String authority) {
+		boolean permissionExists = repository.existsByAuthority(authority);
+
+		if (permissionExists) {
+			throw new MyException("Permission " + contentReader.readFromFile("alreadyExists.txt"), null,
+					"PermissionAlreadyExistsException");
+		}
 	}
 
 }

@@ -30,7 +30,7 @@ public class UserService {
 	public void existsByUsername(String username) {
 		boolean librarianExists = repository.existsByUsername(username);
 		if (librarianExists) {
-			throw new MyException(contentReader.readFromFile("userAlreadyExists.txt"), null,
+			throw new MyException("Username "+ contentReader.readFromFile("alreadyExists.txt"), null,
 					"UserAlreadyExistsException");
 		}
 	}
