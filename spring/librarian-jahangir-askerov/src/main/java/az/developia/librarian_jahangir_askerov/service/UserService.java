@@ -30,7 +30,7 @@ public class UserService {
 	public void existsByUsername(String username) {
 		boolean librarianExists = repository.existsByUsername(username);
 		if (librarianExists) {
-			throw new MyException("Username "+ contentReader.readFromFile("alreadyExists.txt"), null,
+			throw new MyException("Username " + contentReader.readFromFile("alreadyExists.txt"), null,
 					"UserAlreadyExistsException");
 		}
 	}
@@ -53,15 +53,20 @@ public class UserService {
 		return username;
 	}
 
-	public UserEntity findOperatorByUsername(String username) {
-		Optional<UserEntity> op = repository.findByUsername(username);
-		if (op.isPresent()) {
-			return op.get();
-		} else {
-			throw new MyException("User not found", null, "UserNotFoundException");
+	public UserEntity findOperatorByUsername() {
+		String operatorUsername = findOperatorUsername();
+		Optional<UserEntity> optional = repository.findByUsername(operatorUsername);
 
+		if (!optional.isPresent()) {
+			throw new MyException(contentReader.readFromFile("usernameNotFound.txt"), null,
+					"UsernameNotFoundException");
 		}
 
+		return optional.get();
+	}
+
+	public Integer findOperatorId() {
+		return findOperatorByUsername().getId();
 	}
 
 }

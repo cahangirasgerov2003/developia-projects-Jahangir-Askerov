@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import az.developia.librarian_jahangir_askerov.entity.BookEntity;
-import az.developia.librarian_jahangir_askerov.entity.UserEntity;
 import az.developia.librarian_jahangir_askerov.exception.MyException;
 import az.developia.librarian_jahangir_askerov.repository.BookRepository;
 import az.developia.librarian_jahangir_askerov.request.BookAddRequest;
@@ -36,10 +35,7 @@ public class BookService {
 	public BookAddResponse create(BookAddRequest book) {
 		BookEntity bookEntity = modelMapper.map(book, BookEntity.class);
 
-		String operatorName = userService.findOperatorUsername();
-		UserEntity operator = userService.findOperatorByUsername(operatorName);
-		Integer sellerCode = operator.getId();
-		bookEntity.setOperator_id(sellerCode);
+		bookEntity.setOperator_id(userService.findOperatorId());
 
 		repository.save(bookEntity);
 		return new BookAddResponse(bookEntity.getId());
@@ -69,13 +65,9 @@ public class BookService {
 	}
 
 	public BookListResponse getByName(String q) {
-		String operatorName = userService.findOperatorUsername();
-		UserEntity operator = userService.findOperatorByUsername(operatorName);
-		Integer operator_id = operator.getId();
-
 		q = q.toLowerCase();
 
-		List<BookEntity> searchedBooks = repository.findAllByNameContaining(q, operator_id);
+		List<BookEntity> searchedBooks = repository.findAllByNameContaining(q, userService.findOperatorId());
 
 		List<BookSingleResponse> mappedBooks = new ArrayList<BookSingleResponse>();
 		for (BookEntity book : searchedBooks) {
@@ -105,23 +97,19 @@ public class BookService {
 
 	public void updateById(Integer id, BookUpdateRequest book) {
 		Optional<BookEntity> optionalBook = repository.findById(id);
+
 		if (optionalBook.isEmpty()) {
 			throw new MyException(contentReader.readFromFile("idNotFound.txt"), null, "NotFoundException");
 		}
 
-		String operatorName = userService.findOperatorUsername();
-		UserEntity operator = userService.findOperatorByUsername(operatorName);
-		Integer operator_id = operator.getId();
-
-		BookEntity bookEntity = optionalBook.get();
-		Integer bookOwnerId = bookEntity.getOperator_id();
-		if (operator_id == bookOwnerId) {
-			repository.deleteById(id);
-		} else {
-			throw new MyException("This is not your book", null, "Forbidden");
-		}
-
 		BookEntity existingBook = optionalBook.get();
+
+		Integer bookOwnerId = existingBook.getOperator_id();
+
+		if (userService.findOperatorId() != bookOwnerId) {
+			throw new MyException(contentReader.readFromFile("forbidden.txt"), null, "Forbidden");
+
+		}
 
 		modelMapper.map(book, existingBook);
 
@@ -135,17 +123,16 @@ public class BookService {
 			throw new MyException(contentReader.readFromFile("idNotFound.txt"), null, "NotFoundException");
 		}
 
-		String operatorName = userService.findOperatorUsername();
-		UserEntity operator = userService.findOperatorByUsername(operatorName);
-		Integer operator_id = operator.getId();
+		BookEntity existingBook = optionalBook.get();
 
-		BookEntity bookEntity = optionalBook.get();
-		Integer bookOwnerId = bookEntity.getOperator_id();
-		if (operator_id == bookOwnerId) {
-			repository.deleteById(id);
-		} else {
-			throw new MyException("This is not your book", null, "Forbidden");
+		Integer bookOwnerId = existingBook.getOperator_id();
+
+		if (userService.findOperatorId() != bookOwnerId) {
+			throw new MyException(contentReader.readFromFile("forbidden.txt"), null, "Forbidden");
 		}
+
+		repository.deleteById(id);
+
 	}
 
 }

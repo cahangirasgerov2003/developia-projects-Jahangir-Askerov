@@ -41,7 +41,7 @@ public class BookAddRequest {
 	@Min(value = 10, message = "{pages.min}")
 	private Integer pageCount;
 
-	@NotNull(message = "{cannot.be.empty}")
+	@NotNull(message = "{field.empty}")
 	@Past(message = "Publish date must be in the past")
 	private LocalDate publishDate;
 

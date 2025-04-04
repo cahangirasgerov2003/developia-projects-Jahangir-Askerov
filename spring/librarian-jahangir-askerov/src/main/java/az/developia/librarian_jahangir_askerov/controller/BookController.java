@@ -56,13 +56,13 @@ public class BookController {
 	}
 
 	@GetMapping(path = "/search")
-	@PreAuthorize(value = "hasAuthority('ROLE_SEARCH_BOOK')")
+	@PreAuthorize(value = "hasAuthority('ROLE_SEARCH_BOOKS')")
 	public ResponseEntity<BookListResponse> getByName(@RequestParam(name = "name", defaultValue = "") String q) {
 		return ResponseEntity.ok(service.getByName(q));
 	}
 
 	@GetMapping
-	@PreAuthorize(value = "hasAuthority('ROLE_PAGINATE_BOOK')")
+	@PreAuthorize(value = "hasAuthority('ROLE_PAGINATE_BOOKS')")
 	public ResponseEntity<BookListResponse> getPaginated(@RequestParam(name = "page", defaultValue = "1") Integer page,
 			@RequestParam(name = "size", defaultValue = "3") Integer size) {
 		return ResponseEntity.ok(service.getPaginated(page, size));
