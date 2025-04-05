@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import az.developia.librarian_jahangir_askerov.exception.MyException;
 import az.developia.librarian_jahangir_askerov.request.BookAddRequest;
+import az.developia.librarian_jahangir_askerov.request.BookFilterRequest;
 import az.developia.librarian_jahangir_askerov.request.BookUpdateRequest;
 import az.developia.librarian_jahangir_askerov.response.BookAddResponse;
 import az.developia.librarian_jahangir_askerov.response.BookListResponse;
@@ -59,6 +60,16 @@ public class BookController {
 	@PreAuthorize(value = "hasAuthority('ROLE_SEARCH_BOOKS')")
 	public ResponseEntity<BookListResponse> getByName(@RequestParam(name = "name", defaultValue = "") String q) {
 		return ResponseEntity.ok(service.getByName(q));
+	}
+
+	@PostMapping("/filter")
+	@PreAuthorize(value = "hasAuthority('ROLE_FILTER_BOOKS')")
+	public ResponseEntity<BookListResponse> getByFilter(@Valid @RequestBody BookFilterRequest req, BindingResult br) {
+		if (br.hasErrors()) {
+			throw new MyException(contentReader.readFromFile("validationMessage.txt"), br, "ValidationException");
+		}
+
+		return ResponseEntity.ok(service.getByFilter(req));
 	}
 
 	@GetMapping

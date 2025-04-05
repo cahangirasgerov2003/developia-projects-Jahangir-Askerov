@@ -21,4 +21,12 @@ public interface BookRepository extends JpaRepository<BookEntity, Integer> {
 
 	@Query(value = "Select * from books where  operator_id=?2 and lower(name) like %?1%", nativeQuery = true)
 	public abstract List<BookEntity> findAllByNameContaining(String name, Integer operator_id);
+
+	@Query(value = "Select count(*) from books where operator_id=?1 and lower(author) like %?2% and lower(name) like %?3% and (price between ?4 and ?5) and publish_date like %?6%", nativeQuery = true)
+	public abstract Long getByFilterCount(Integer operator_id, String author, String name, String priceMin,
+			String priceMax, String publishDate);
+
+	@Query(value = "Select * from books where operator_id=?1 and lower(author) like %?2% and lower(name) like %?3% and (price between ?4 and ?5) and publish_date like %?6%", nativeQuery = true)
+	public abstract List<BookEntity> getByFilter(Integer operator_id, String author, String name, String priceMin,
+			String priceMax, String publishDate);
 }

@@ -12,7 +12,8 @@ insert into permissions (authority, admin, librarian) values
 ('ROLE_SEARCH_BOOKS', 0, 1),
 ('ROLE_PAGINATE_BOOKS', 0, 1), 
 ('ROLE_DELETE_BOOK', 0, 1), 
-('ROLE_UPDATE_BOOK', 0, 1);
+('ROLE_UPDATE_BOOK', 0, 1),
+('ROLE_FILTER_BOOKS', 0, 1);
 
 insert into librarians (name, surname, birthday, email, phone, city, country, street, zip_code, user_id) values
 ('Ali', 'Aliyev', '2005-01-11', 'cavid22@gmail.com', '055-011-11-11', 'Baku', 'Ajarbaijan', 'not', '12345', 1),

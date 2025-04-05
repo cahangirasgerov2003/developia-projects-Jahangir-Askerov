@@ -12,6 +12,7 @@ import az.developia.librarian_jahangir_askerov.entity.BookEntity;
 import az.developia.librarian_jahangir_askerov.exception.MyException;
 import az.developia.librarian_jahangir_askerov.repository.BookRepository;
 import az.developia.librarian_jahangir_askerov.request.BookAddRequest;
+import az.developia.librarian_jahangir_askerov.request.BookFilterRequest;
 import az.developia.librarian_jahangir_askerov.request.BookUpdateRequest;
 import az.developia.librarian_jahangir_askerov.response.BookAddResponse;
 import az.developia.librarian_jahangir_askerov.response.BookListResponse;
@@ -76,6 +77,46 @@ public class BookService {
 		}
 		BookListResponse books = new BookListResponse();
 		books.setBooks(mappedBooks);
+		return books;
+	}
+
+	public BookListResponse getByFilter(BookFilterRequest filter) {
+
+		String priceMin = filter.getPriceMin().trim();
+		String priceMax = filter.getPriceMax().trim();
+
+		final String DEFAULT_MAX_PRICE = String.valueOf(Integer.MAX_VALUE);
+
+		if (priceMin.isEmpty() || priceMax.isEmpty()) {
+			priceMin = priceMin.isEmpty() ? "0" : priceMin;
+			priceMax = priceMax.isEmpty() ? DEFAULT_MAX_PRICE : priceMax;
+		} else {
+			if (Integer.parseInt(priceMin) > Integer.parseInt(priceMax))
+				throw new MyException("Price minimum cannot be greater than price maximum", null, "Forbidden");
+		}
+
+		Long count = repository.getByFilterCount(userService.findOperatorId(), filter.getAuthor().trim().toLowerCase(),
+				filter.getName().trim().toLowerCase(), priceMin, priceMax, filter.getPublishDate());
+
+		if (count > 5)
+			throw new MyException("Too many results. Please refine your search", null, "TooManyResultsException");
+
+		if (count == 0)
+			throw new MyException("Unfortunately, nothing was found based on your search", null, "NotFoundException");
+
+		List<BookEntity> filteredBooks = repository.getByFilter(userService.findOperatorId(),
+				filter.getAuthor().trim().toLowerCase(), filter.getName().trim().toLowerCase(), priceMin, priceMax,
+				filter.getPublishDate());
+
+		List<BookSingleResponse> mappedBooks = new ArrayList<BookSingleResponse>();
+
+		for (BookEntity book : filteredBooks) {
+			BookSingleResponse resp = modelMapper.map(book, BookSingleResponse.class);
+			mappedBooks.add(resp);
+		}
+
+		BookListResponse books = new BookListResponse(mappedBooks);
+
 		return books;
 	}
 
