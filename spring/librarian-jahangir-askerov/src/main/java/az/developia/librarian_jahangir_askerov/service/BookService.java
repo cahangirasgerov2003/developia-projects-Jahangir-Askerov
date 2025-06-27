@@ -8,16 +8,19 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
+import az.developia.librarian_jahangir_askerov.config.ApplicationConfig;
 import az.developia.librarian_jahangir_askerov.entity.BookEntity;
 import az.developia.librarian_jahangir_askerov.exception.MyException;
 import az.developia.librarian_jahangir_askerov.repository.BookRepository;
 import az.developia.librarian_jahangir_askerov.request.BookAddRequest;
 import az.developia.librarian_jahangir_askerov.request.BookFilterRequest;
 import az.developia.librarian_jahangir_askerov.request.BookUpdateRequest;
+import az.developia.librarian_jahangir_askerov.request.ByCustomerFilterRequest;
 import az.developia.librarian_jahangir_askerov.response.BookAddResponse;
 import az.developia.librarian_jahangir_askerov.response.BookListResponse;
 import az.developia.librarian_jahangir_askerov.response.BookSingleResponse;
 import az.developia.librarian_jahangir_askerov.util.FileContentReader;
+import jakarta.validation.Valid;
 
 @RestController
 public class BookService {
@@ -32,6 +35,9 @@ public class BookService {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private ApplicationConfig applicationConfig;
 
 	public BookAddResponse create(BookAddRequest book) {
 		BookEntity bookEntity = modelMapper.map(book, BookEntity.class);
@@ -98,7 +104,7 @@ public class BookService {
 		Long count = repository.getByFilterCount(userService.findOperatorId(), filter.getAuthor().trim().toLowerCase(),
 				filter.getName().trim().toLowerCase(), priceMin, priceMax, filter.getPublishDate());
 
-		if (count > 5)
+		if (count > applicationConfig.getBookCountLimit())
 			throw new MyException("Too many results. Please refine your search", null, "TooManyResultsException");
 
 		if (count == 0)
@@ -115,9 +121,15 @@ public class BookService {
 			mappedBooks.add(resp);
 		}
 
-		BookListResponse books = new BookListResponse(mappedBooks);
+		BookListResponse books = new BookListResponse();
+		books.setBooks(mappedBooks);
 
 		return books;
+	}
+	
+	
+	public BookListResponse getByCustomerFilter(@Valid ByCustomerFilterRequest req) {
+		return null;
 	}
 
 	public BookListResponse getPaginated(Integer page, Integer size) {
@@ -175,5 +187,6 @@ public class BookService {
 		repository.deleteById(id);
 
 	}
+
 
 }

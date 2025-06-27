@@ -11,4 +11,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class BookListResponse {
 	private List<BookSingleResponse> books;
+	private Long totalSize;
 }

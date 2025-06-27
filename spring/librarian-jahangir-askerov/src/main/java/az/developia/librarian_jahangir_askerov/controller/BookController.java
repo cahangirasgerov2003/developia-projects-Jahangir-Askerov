@@ -19,6 +19,7 @@ import az.developia.librarian_jahangir_askerov.exception.MyException;
 import az.developia.librarian_jahangir_askerov.request.BookAddRequest;
 import az.developia.librarian_jahangir_askerov.request.BookFilterRequest;
 import az.developia.librarian_jahangir_askerov.request.BookUpdateRequest;
+import az.developia.librarian_jahangir_askerov.request.ByCustomerFilterRequest;
 import az.developia.librarian_jahangir_askerov.response.BookAddResponse;
 import az.developia.librarian_jahangir_askerov.response.BookListResponse;
 import az.developia.librarian_jahangir_askerov.response.BookSingleResponse;
@@ -71,7 +72,16 @@ public class BookController {
 
 		return ResponseEntity.ok(service.getByFilter(req));
 	}
-
+	
+	@PostMapping("/filter-for-customer")
+	public ResponseEntity<BookListResponse> getByCustomerFilter(@Valid @RequestBody ByCustomerFilterRequest req, BindingResult br ){
+		if(br.hasErrors()) {
+			throw new MyException(contentReader.readFromFile("validationMessage.txt"), br, "ValidationException");
+		}
+		
+		return ResponseEntity.ok(service.getByCustomerFilter(req));
+	}
+ 
 	@GetMapping
 	@PreAuthorize(value = "hasAuthority('ROLE_PAGINATE_BOOKS')")
 	public ResponseEntity<BookListResponse> getPaginated(@RequestParam(name = "page", defaultValue = "1") Integer page,

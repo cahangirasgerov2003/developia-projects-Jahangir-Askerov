@@ -25,11 +25,11 @@ insert into users (username, password, enabled, active, type) values
 ('l1', '{noop}1', 1, 1, 'librarian'),
 ('l2', '{noop}1', 1, 1, 'librarian');
 
-insert into books (name, price, author, description, color, page_count, publish_date, operator_id ) values
-('1984', '25', 'GEORGE ORWELL', 'It tells the story of Winston Smith', 'red', '212', '2001-01-12', 2 ),
-('Moby-Dick', '70', 'GEORGE ORWELL', 'It tells the story of Winston Smith', 'black', '289', '2003-03-12', 2 ),
-('Pride and Prejudice', '10', 'GEORGE ORWELL', 'It tells the story of Winston Smith', 'green', '101', '2021-05-12', 2 ),
-('Don Quixote', '120', 'GEORGE ORWELL', 'It tells the story of Winston Smith', 'green', '567', '2011-07-12', 3 );
+insert into books (name, price, author, description, color, page_count, publish_date, operator_id, category_id ) values
+('1984', '25', 'GEORGE ORWELL', 'It tells the story of Winston Smith', 'red', '212', '2001-01-12', 2, 1 ),
+('Moby-Dick', '70', 'GEORGE ORWELL', 'It tells the story of Winston Smith', 'black', '289', '2003-03-12', 2, 1 ),
+('Pride and Prejudice', '10', 'GEORGE ORWELL', 'It tells the story of Winston Smith', 'green', '101', '2021-05-12', 2, 1 ),
+('Don Quixote', '120', 'GEORGE ORWELL', 'It tells the story of Winston Smith', 'green', '567', '2011-07-12', 3, 1 );
 
 
 insert into authorities (username, authority) select 'a1', authority from permissions where admin=1;

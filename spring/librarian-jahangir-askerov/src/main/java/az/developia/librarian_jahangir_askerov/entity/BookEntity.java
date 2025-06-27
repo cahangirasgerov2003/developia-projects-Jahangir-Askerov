@@ -38,5 +38,7 @@ public class BookEntity {
 	private LocalDate publishDate;
 
 	private Integer operator_id;
+	
+	private Integer categoryId;
 
 }
