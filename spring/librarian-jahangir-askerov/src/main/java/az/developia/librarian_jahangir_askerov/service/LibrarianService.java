@@ -13,7 +13,7 @@ import az.developia.librarian_jahangir_askerov.response.UserAddResponse;
 import jakarta.transaction.Transactional;
 
 @RestController
-@Transactional
+@Transactional(rollbackOn = Exception.class)
 public class LibrarianService {
 
 	@Autowired

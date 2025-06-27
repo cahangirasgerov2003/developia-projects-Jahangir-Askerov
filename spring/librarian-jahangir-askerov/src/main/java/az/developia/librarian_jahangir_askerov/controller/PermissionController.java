@@ -41,10 +41,10 @@ public class PermissionController {
 		if (br.hasErrors()) {
 			throw new MyException(contentReader.readFromFile("validationException.txt"), br, "ValidationException");
 		}
-		
+
 //		Check if a permission with the given authority name already exists
 		service.existsByAuthority(req.getAuthority());
-		
+
 		return new ResponseEntity<PermissionAddResponse>(service.add(req), HttpStatus.CREATED);
 	}
 
@@ -88,10 +88,10 @@ public class PermissionController {
 		if (br.hasErrors()) {
 			throw new MyException(contentReader.readFromFile("validationException.txt"), br, "ValidationException");
 		}
-		
+
 //		Check if the updated permission name already exists in the database
-		
+
 		service.updateById(id, req);
 		return ResponseEntity.noContent().build();
-	} 
+	}
 }

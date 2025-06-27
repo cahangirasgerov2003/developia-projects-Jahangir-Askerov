@@ -36,7 +36,7 @@ public class BookEntity {
 	private Integer pageCount;
 
 	private LocalDate publishDate;
-	
+
 	private Integer operator_id;
 
 }
