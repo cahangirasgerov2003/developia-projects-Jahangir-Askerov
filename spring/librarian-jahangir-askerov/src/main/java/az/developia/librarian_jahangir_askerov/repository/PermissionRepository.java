@@ -9,7 +9,7 @@ import az.developia.librarian_jahangir_askerov.entity.PermissionEntity;
 
 public interface PermissionRepository extends JpaRepository<PermissionEntity, Integer> {
 
-//	Method query
+//	Query method
 	public abstract List<PermissionEntity> findAllByAuthorityContaining(String name);
 
 	public abstract Boolean existsByAuthority(String authorityName);

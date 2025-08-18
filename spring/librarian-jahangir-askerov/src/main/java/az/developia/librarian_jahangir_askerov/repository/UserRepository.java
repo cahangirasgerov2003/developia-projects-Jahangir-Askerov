@@ -8,7 +8,7 @@ import az.developia.librarian_jahangir_askerov.entity.UserEntity;
 
 public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 
-//	Method query
+//	Query method
 	public abstract boolean existsByUsername(String username);
 
 	public abstract Optional<UserEntity> findByUsername(String username);

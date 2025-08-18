@@ -126,10 +126,25 @@ public class BookService {
 
 		return books;
 	}
-	
-	
+
 	public BookListResponse getByCustomerFilter(@Valid ByCustomerFilterRequest req) {
-		return null;
+		Integer begin = (req.getPage()-1) * req.getSize();
+		String lowerName = req.getName().toLowerCase();
+
+		Long filteredBooksCount = repository.getByCustomerFilterCount(req.getCategoryId(), lowerName);
+
+		List<BookEntity> filteredBooks = repository.getByCustomerFilter(req.getCategoryId(), lowerName, begin,
+				req.getSize());
+
+		List<BookSingleResponse> mappedBooks = new ArrayList<BookSingleResponse>();
+
+		for (BookEntity book : filteredBooks) {
+			mappedBooks.add(modelMapper.map(book, BookSingleResponse.class));
+		}
+
+		BookListResponse books = new BookListResponse(mappedBooks, filteredBooksCount);
+
+		return books;
 	}
 
 	public BookListResponse getPaginated(Integer page, Integer size) {
@@ -187,6 +202,5 @@ public class BookService {
 		repository.deleteById(id);
 
 	}
-
 
 }

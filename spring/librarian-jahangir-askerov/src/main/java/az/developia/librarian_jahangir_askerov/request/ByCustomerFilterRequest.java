@@ -16,7 +16,7 @@ public class ByCustomerFilterRequest {
 	private String name;
 
 	@NotNull(message = "{field.empty}")
-	@Min(value = 1, message = "{pagination.size.min}")
+	@Min(value = 0, message = "{pagination.size.min}")
 	private Integer categoryId;
 	
 	@NotNull(message = "{field.empty}")
