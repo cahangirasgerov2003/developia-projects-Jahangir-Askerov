@@ -11,20 +11,20 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ByCustomerFilterRequest {
-	
+
 	@NotNull(message = "{field.empty}")
 	private String name;
 
 	@NotNull(message = "{field.empty}")
 	@Min(value = 0, message = "{pagination.size.min}")
 	private Integer categoryId;
-	
+
 	@NotNull(message = "{field.empty}")
 	@Min(value = 1, message = "{pagination.size.min}")
 	private Integer page;
-	
+
 	@NotNull(message = "{field.empty}")
 	@Min(value = 1, message = "{pagination.size.min}")
-	@Max(value = 3, message = "{pagination.size.max}" )
+	@Max(value = 3, message = "{pagination.size.max}")
 	private Integer size;
 }

@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import az.developia.librarian_jahangir_askerov.util.FileContentReader;
 import lombok.AllArgsConstructor;
@@ -27,5 +28,10 @@ public class ApplicationConfig {
 	@Bean
 	public FileContentReader contentReader() {
 		return new FileContentReader();
+	}
+
+	@Bean
+	public BCryptPasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
 	}
 }

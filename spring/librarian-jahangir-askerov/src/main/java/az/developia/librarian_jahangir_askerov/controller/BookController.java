@@ -40,7 +40,7 @@ public class BookController {
 	@PreAuthorize(value = "hasAuthority('ROLE_ADD_BOOK')")
 	public ResponseEntity<BookAddResponse> create(@Valid @RequestBody BookAddRequest req, BindingResult br) {
 		if (br.hasErrors()) {
-			throw new MyException(contentReader.readFromFile("validationMessage.txt"), br, "ValidationException");
+			throw new MyException(contentReader.readFromFile("validationException.txt"), br, "ValidationException");
 		}
 		return new ResponseEntity<BookAddResponse>(service.create(req), HttpStatus.CREATED);
 	}
@@ -55,33 +55,41 @@ public class BookController {
 	@PreAuthorize(value = "hasAuthority('ROLE_FIND_BY_ID_BOOK')")
 	public ResponseEntity<BookSingleResponse> getById(@PathVariable Integer id) {
 		return ResponseEntity.ok(service.getById(id));
-	}
+	} 
 
 	@GetMapping(path = "/search")
 	@PreAuthorize(value = "hasAuthority('ROLE_SEARCH_BOOKS')")
 	public ResponseEntity<BookListResponse> getByName(@RequestParam(name = "name", defaultValue = "") String q) {
 		return ResponseEntity.ok(service.getByName(q));
+	} 
+	
+	@GetMapping(path = "/search-for-student")
+	@PreAuthorize(value = "hasAuthority('ROLE_STUDENT_SEARCH_BOOKS')")
+	public ResponseEntity<BookListResponse> getBooksForStudentByName(@RequestParam(name = "name", defaultValue = "") String q){
+		return ResponseEntity.ok(service.getBooksForStudentByName(q));
 	}
+	
 
 	@PostMapping("/filter")
 	@PreAuthorize(value = "hasAuthority('ROLE_FILTER_BOOKS')")
 	public ResponseEntity<BookListResponse> getByFilter(@Valid @RequestBody BookFilterRequest req, BindingResult br) {
 		if (br.hasErrors()) {
-			throw new MyException(contentReader.readFromFile("validationMessage.txt"), br, "ValidationException");
+			throw new MyException(contentReader.readFromFile("validationException.txt"), br, "ValidationException");
 		}
 
 		return ResponseEntity.ok(service.getByFilter(req));
 	}
-	
+
 	@PostMapping("/filter-for-customer")
-	public ResponseEntity<BookListResponse> getByCustomerFilter(@Valid @RequestBody ByCustomerFilterRequest req, BindingResult br ){
-		if(br.hasErrors()) {
-			throw new MyException(contentReader.readFromFile("validationMessage.txt"), br, "ValidationException");
+	public ResponseEntity<BookListResponse> getByCustomerFilter(@Valid @RequestBody ByCustomerFilterRequest req,
+			BindingResult br) {
+		if (br.hasErrors()) {
+			throw new MyException(contentReader.readFromFile("validationException.txt"), br, "ValidationException");
 		}
-		
+
 		return ResponseEntity.ok(service.getByCustomerFilter(req));
 	}
- 
+
 	@GetMapping
 	@PreAuthorize(value = "hasAuthority('ROLE_PAGINATE_BOOKS')")
 	public ResponseEntity<BookListResponse> getPaginated(@RequestParam(name = "page", defaultValue = "1") Integer page,
@@ -94,7 +102,7 @@ public class BookController {
 	public ResponseEntity<?> updateById(@PathVariable Integer id, @Valid @RequestBody BookUpdateRequest req,
 			BindingResult br) {
 		if (br.hasErrors()) {
-			throw new MyException(contentReader.readFromFile("validationMessage.txt"), br, "ValidationException");
+			throw new MyException(contentReader.readFromFile("validationException.txt"), br, "ValidationException");
 		}
 
 		service.updateById(id, req);

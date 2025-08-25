@@ -46,10 +46,15 @@ public class BookAddRequest {
 	@Past(message = "Publish date must be in the past")
 	private LocalDate publishDate;
 
+	@NotNull(message = "{field.empty}")
+	@Min(value = 1, message = "{pages.min}")
+	private Integer bookCategory;
+
 	@PrePersist
 	public void setDefaultColor() {
 		if (this.getColor() == null || this.getColor().isBlank()) {
 			this.setColor("White");
 		}
 	}
+	
 }

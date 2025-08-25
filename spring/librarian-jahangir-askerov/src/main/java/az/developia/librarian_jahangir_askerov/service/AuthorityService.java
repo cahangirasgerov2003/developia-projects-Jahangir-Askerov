@@ -17,4 +17,9 @@ public class AuthorityService {
 		return new AuthorityAddResponse(affectedRows);
 	}
 
+	public AuthorityAddResponse addStudentAuthorities(String username) {
+		Integer affectedRows = repository.addStudentAuthorities(username);
+		return new AuthorityAddResponse(affectedRows);
+	}
+
 }

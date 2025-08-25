@@ -1,40 +1,43 @@
 package az.developia.librarian_jahangir_askerov.entity;
 
-import jakarta.persistence.Column;
+import java.time.LocalDate;
+
+import az.developia.librarian_jahangir_askerov.model.Address;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "permissions")
+@Table(name = "students")
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class PermissionEntity {
+@NoArgsConstructor
+public class StudentEntity {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	private String authority;
-	
-	private Integer student;
-	
-	private Integer librarian;
+	private String name;
 
-	@Column(columnDefinition = "int default 1")
-	private Integer admin;
-	
-	@PrePersist
-	public void prePersist() {
-		if (this.admin == null) {
-			this.admin = 1;
-		}
-	}
+	private String surname;
+
+	private String email;
+
+	private String phone;
+
+	private LocalDate birthday;
+
+	private Address address;
+
+	private Integer userId;
+
+	private Integer operatorId;
+
 }

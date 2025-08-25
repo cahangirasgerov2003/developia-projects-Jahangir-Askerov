@@ -12,6 +12,7 @@ import az.developia.librarian_jahangir_askerov.entity.UserEntity;
 import az.developia.librarian_jahangir_askerov.exception.MyException;
 import az.developia.librarian_jahangir_askerov.repository.UserRepository;
 import az.developia.librarian_jahangir_askerov.request.LibrarianAddRequest;
+import az.developia.librarian_jahangir_askerov.request.StudentAddRequest;
 import az.developia.librarian_jahangir_askerov.response.UserAddResponse;
 import az.developia.librarian_jahangir_askerov.util.FileContentReader;
 
@@ -27,6 +28,9 @@ public class UserService {
 	@Autowired
 	private ModelMapper modelMapper;
 
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+
 	public void existsByUsername(String username) {
 		boolean librarianExists = repository.existsByUsername(username);
 		if (librarianExists) {
@@ -36,16 +40,8 @@ public class UserService {
 	}
 
 	public UserAddResponse addLibrarian(LibrarianAddRequest req) {
-		UserEntity userEntity = modelMapper.map(req, UserEntity.class);
-		String unHashedPass = userEntity.getPassword();
-		String encodedPass = "{bcrypt}" + new BCryptPasswordEncoder().encode(unHashedPass);
-		userEntity.setEnabled(1);
-		userEntity.setActive(1);
-		userEntity.setType("librarian");
-		userEntity.setPassword(encodedPass);
-		repository.save(userEntity);
+		return createUser(req, "librarian");
 
-		return new UserAddResponse(userEntity.getId());
 	}
 
 	public String findOperatorUsername() {
@@ -67,6 +63,23 @@ public class UserService {
 
 	public Integer findOperatorId() {
 		return findOperatorByUsername().getId();
+	}
+
+	public UserAddResponse addStudent(StudentAddRequest req) {
+		return createUser(req, "student");
+	}
+
+	public UserAddResponse createUser(Object req, String type) {
+		UserEntity entity = modelMapper.map(req, UserEntity.class);
+		String unHashedPass = entity.getPassword();
+		String encodedPass = "{bcrypt}" + passwordEncoder.encode(unHashedPass);
+		entity.setEnabled(1);
+		entity.setActive(1);
+		entity.setType(type);
+		entity.setPassword(encodedPass);
+		repository.save(entity);
+
+		return new UserAddResponse(entity.getId());
 	}
 
 }

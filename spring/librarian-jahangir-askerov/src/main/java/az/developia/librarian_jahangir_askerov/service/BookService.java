@@ -86,6 +86,22 @@ public class BookService {
 		return books;
 	}
 
+	public BookListResponse getBooksForStudentByName(String q) {
+		q = q.toLowerCase();
+		List<BookEntity> searchedBooks = repository.findAllByNameContaining(q);
+
+		List<BookSingleResponse> mappedBooks = new ArrayList<BookSingleResponse>();
+		for (BookEntity book : searchedBooks) {
+			BookSingleResponse resp = modelMapper.map(book, BookSingleResponse.class);
+			mappedBooks.add(resp);
+		}
+
+		BookListResponse books = new BookListResponse();
+		books.setBooks(mappedBooks);
+		books.setTotalSize((long) mappedBooks.size());
+		return books;
+	}
+
 	public BookListResponse getByFilter(BookFilterRequest filter) {
 
 		String priceMin = filter.getPriceMin().trim();
@@ -128,7 +144,7 @@ public class BookService {
 	}
 
 	public BookListResponse getByCustomerFilter(@Valid ByCustomerFilterRequest req) {
-		Integer begin = (req.getPage()-1) * req.getSize();
+		Integer begin = (req.getPage() - 1) * req.getSize();
 		String lowerName = req.getName().toLowerCase();
 
 		Long filteredBooksCount = repository.getByCustomerFilterCount(req.getCategoryId(), lowerName);
