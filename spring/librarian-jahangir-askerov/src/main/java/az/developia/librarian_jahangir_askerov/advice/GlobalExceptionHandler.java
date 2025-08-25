@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -36,4 +37,12 @@ public class GlobalExceptionHandler {
 		return resp;
 	}
 
+	@ExceptionHandler(AuthorizationDeniedException.class)
+	public MyExceptionResponse handleAuthorizationDenied(AuthorizationDeniedException e) {
+		MyExceptionResponse resp = new MyExceptionResponse();
+		resp.setType("AuthorizationDeniedException");
+		resp.setErrorOccurrenceTime(LocalDateTime.now());
+		resp.setMessage(e.getMessage());
+		return resp;
+	}
 }

@@ -15,6 +15,7 @@ import az.developia.librarian_jahangir_askerov.request.StudentAddRequest;
 import az.developia.librarian_jahangir_askerov.response.StudentAddResponse;
 import az.developia.librarian_jahangir_askerov.service.StudentService;
 import az.developia.librarian_jahangir_askerov.util.FileContentReader;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 
 @RestController
@@ -29,6 +30,8 @@ public class StudentController {
 
 	@PreAuthorize(value = "hasAuthority('ROLE_ADD_STUDENT')")
 	@PostMapping
+	@Operation(summary = "Through this method, the librarian can register new students", description = "This endpoint validates the student data and creates a new student in the system. "
+			+ "If validation fails, a ValidationException is thrown with detailed field errors.")
 	public ResponseEntity<StudentAddResponse> create(@Valid @RequestBody StudentAddRequest req, BindingResult br) {
 
 		if (br.hasErrors()) {
@@ -37,7 +40,5 @@ public class StudentController {
 
 		return new ResponseEntity<StudentAddResponse>(service.create(req), HttpStatus.CREATED);
 	}
-	
-	
 
 }
