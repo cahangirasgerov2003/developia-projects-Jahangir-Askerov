@@ -14,7 +14,7 @@ import az.developia.librarian_jahangir_askerov.repository.UserRepository;
 import az.developia.librarian_jahangir_askerov.request.LibrarianAddRequest;
 import az.developia.librarian_jahangir_askerov.request.StudentAddRequest;
 import az.developia.librarian_jahangir_askerov.response.UserAddResponse;
-import az.developia.librarian_jahangir_askerov.util.FileContentReader;
+import az.developia.librarian_jahangir_askerov.util.io.FileContentReader;
 
 @RestController
 public class UserService {

@@ -24,7 +24,7 @@ import az.developia.librarian_jahangir_askerov.response.BookAddResponse;
 import az.developia.librarian_jahangir_askerov.response.BookListResponse;
 import az.developia.librarian_jahangir_askerov.response.BookSingleResponse;
 import az.developia.librarian_jahangir_askerov.service.BookService;
-import az.developia.librarian_jahangir_askerov.util.FileContentReader;
+import az.developia.librarian_jahangir_askerov.util.io.FileContentReader;
 import jakarta.validation.Valid;
 
 @RestController

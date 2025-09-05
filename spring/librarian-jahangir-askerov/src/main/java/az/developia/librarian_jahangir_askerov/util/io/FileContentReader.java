@@ -1,4 +1,4 @@
-package az.developia.librarian_jahangir_askerov.util;
+package az.developia.librarian_jahangir_askerov.util.io;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

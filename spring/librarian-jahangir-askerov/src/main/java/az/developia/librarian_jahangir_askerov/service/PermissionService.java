@@ -16,7 +16,7 @@ import az.developia.librarian_jahangir_askerov.request.PermissionUpdateRequest;
 import az.developia.librarian_jahangir_askerov.response.PermissionAddResponse;
 import az.developia.librarian_jahangir_askerov.response.PermissionListResponse;
 import az.developia.librarian_jahangir_askerov.response.PermissionSingleResponse;
-import az.developia.librarian_jahangir_askerov.util.FileContentReader;
+import az.developia.librarian_jahangir_askerov.util.io.FileContentReader;
 import jakarta.validation.Valid;
 
 @RestController

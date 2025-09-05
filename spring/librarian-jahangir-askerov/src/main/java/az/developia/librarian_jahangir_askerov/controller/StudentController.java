@@ -14,7 +14,7 @@ import az.developia.librarian_jahangir_askerov.exception.MyException;
 import az.developia.librarian_jahangir_askerov.request.StudentAddRequest;
 import az.developia.librarian_jahangir_askerov.response.StudentAddResponse;
 import az.developia.librarian_jahangir_askerov.service.StudentService;
-import az.developia.librarian_jahangir_askerov.util.FileContentReader;
+import az.developia.librarian_jahangir_askerov.util.io.FileContentReader;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 

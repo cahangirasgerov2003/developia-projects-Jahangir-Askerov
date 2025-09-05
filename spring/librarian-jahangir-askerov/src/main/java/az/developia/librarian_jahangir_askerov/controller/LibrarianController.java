@@ -13,7 +13,7 @@ import az.developia.librarian_jahangir_askerov.exception.MyException;
 import az.developia.librarian_jahangir_askerov.request.LibrarianAddRequest;
 import az.developia.librarian_jahangir_askerov.response.LibrarianAddResponse;
 import az.developia.librarian_jahangir_askerov.service.LibrarianService;
-import az.developia.librarian_jahangir_askerov.util.FileContentReader;
+import az.developia.librarian_jahangir_askerov.util.io.FileContentReader;
 import jakarta.validation.Valid;
 
 @RestController
