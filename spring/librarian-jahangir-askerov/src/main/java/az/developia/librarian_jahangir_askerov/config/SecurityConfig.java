@@ -48,6 +48,7 @@ public class SecurityConfig {
 		return http.csrf(csrf -> csrf.disable()).cors(Customizer.withDefaults())
 				.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.OPTIONS, "**/").permitAll()
 						.requestMatchers(HttpMethod.POST, "/librarians").permitAll()
+						.requestMatchers(HttpMethod.GET, "/files/video/**").permitAll()
 						.requestMatchers(HttpMethod.POST, "/books/filter-for-customer").permitAll()
 						.requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
 						.anyRequest().authenticated())
