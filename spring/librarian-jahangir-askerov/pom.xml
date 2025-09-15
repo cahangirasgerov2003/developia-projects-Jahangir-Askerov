@@ -127,6 +127,8 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		
+		<finalName>myApplication</finalName>
 	</build>
 
 </project>
