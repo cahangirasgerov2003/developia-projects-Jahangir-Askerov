@@ -38,6 +38,6 @@ public class StudentEntity {
 
 	private Integer userId;
 
-	private Integer operatorId;
+	private Integer operator_id;
 
 }

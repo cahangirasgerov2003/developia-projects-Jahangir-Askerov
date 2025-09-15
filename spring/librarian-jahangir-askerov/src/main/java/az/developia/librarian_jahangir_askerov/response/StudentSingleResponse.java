@@ -1,12 +1,12 @@
 package az.developia.librarian_jahangir_askerov.response;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
+import az.developia.librarian_jahangir_askerov.model.Address;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,23 +14,22 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookSingleResponse {
+public class StudentSingleResponse {
+
 	private Integer id;
 
 	private String name;
 
-	private String author;
+	private String surname;
 
-	private BigDecimal price;
+	private String email;
 
-	private String description;
-
-	private String color;
-
-	private Integer pageCount;
+	private String phone;
 
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	@JsonSerialize(using = LocalDateSerializer.class)
-	private LocalDate publishDate;
+	private LocalDate birthday;
+
+	private Address address;
 
 }
