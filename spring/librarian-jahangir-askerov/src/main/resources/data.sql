@@ -40,6 +40,11 @@ insert into books (name, price, author, description, color, page_count, publish_
 insert into students (name, surname, birthday, email, phone, city, country, street, zip_code, user_id, operator_id ) values
 ('Amil', 'Orucov', '2005-01-11', 'amil22@gmail.com', '055-011-11-11', 'Baku', 'Ajarbaijan', 'not', '12345', 4, 2);
 
+insert into translations (language, word, translate) values
+('en', 'EDIT', 'edit'),
+('en', 'COPY', 'copy'),
+('az', 'EDIT', 'Redaktə et'),
+('az', 'COPY', 'Kopyalayın');
  
 insert into authorities (username, authority) select 'a1', authority from permissions where admin=1;
 

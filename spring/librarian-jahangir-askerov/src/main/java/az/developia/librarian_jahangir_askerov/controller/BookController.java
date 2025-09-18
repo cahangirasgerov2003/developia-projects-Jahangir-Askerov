@@ -55,20 +55,20 @@ public class BookController {
 	@PreAuthorize(value = "hasAuthority('ROLE_FIND_BY_ID_BOOK')")
 	public ResponseEntity<BookSingleResponse> getById(@PathVariable Integer id) {
 		return ResponseEntity.ok(service.getById(id));
-	} 
+	}
 
 	@GetMapping(path = "/search")
 	@PreAuthorize(value = "hasAuthority('ROLE_SEARCH_BOOKS')")
 	public ResponseEntity<BookListResponse> getByName(@RequestParam(name = "name", defaultValue = "") String q) {
 		return ResponseEntity.ok(service.getByName(q));
-	} 
-	
+	}
+
 	@GetMapping(path = "/search-for-student")
 	@PreAuthorize(value = "hasAuthority('ROLE_STUDENT_SEARCH_BOOKS')")
-	public ResponseEntity<BookListResponse> getBooksForStudentByName(@RequestParam(name = "name", defaultValue = "") String q){
+	public ResponseEntity<BookListResponse> getBooksForStudentByName(
+			@RequestParam(name = "name", defaultValue = "") String q) {
 		return ResponseEntity.ok(service.getBooksForStudentByName(q));
 	}
-	
 
 	@PostMapping("/filter")
 	@PreAuthorize(value = "hasAuthority('ROLE_FILTER_BOOKS')")

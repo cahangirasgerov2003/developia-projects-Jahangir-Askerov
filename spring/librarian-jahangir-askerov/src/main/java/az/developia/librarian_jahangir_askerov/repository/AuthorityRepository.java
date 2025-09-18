@@ -3,9 +3,13 @@ package az.developia.librarian_jahangir_askerov.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.web.bind.annotation.RestController;
 
 import az.developia.librarian_jahangir_askerov.entity.AuthorityEntity;
+import jakarta.transaction.Transactional;
 
+@RestController
+@Transactional
 public interface AuthorityRepository extends JpaRepository<AuthorityEntity, Integer> {
 
 //	Native query

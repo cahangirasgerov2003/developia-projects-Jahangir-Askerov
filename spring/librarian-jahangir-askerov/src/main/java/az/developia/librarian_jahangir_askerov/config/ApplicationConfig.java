@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import az.developia.librarian_jahangir_askerov.util.io.FileContentReader;
@@ -15,10 +16,26 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EnableScheduling
 public class ApplicationConfig {
 
 	@Value(value = "${book.count.limit}")
 	private Integer bookCountLimit;
+
+	@Value("${DB_USER}")
+	private String dbUser;
+
+	@Value("${DB_PASSWORD}")
+	private String dbPassword;
+
+	@Value("${DB_HOST}")
+	private String dbHost;
+
+	@Value("${DB_PORT}")
+	private int dbPort;
+
+	@Value("${DB_NAME}")
+	private String dbName;
 
 	@Bean
 	public ModelMapper modelMapper() {

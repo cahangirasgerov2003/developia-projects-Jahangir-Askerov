@@ -74,7 +74,7 @@ public class StudentController {
 	@PreAuthorize(value = "hasAuthority('ROLE_FILTER_STUDENTS')")
 	public ResponseEntity<StudentListResponse> getByFilter(@Valid @RequestBody StudentFilterRequest req,
 			BindingResult br, @RequestParam(name = "page", defaultValue = "1") Integer page,
-			@RequestParam(name = "size", defaultValue = "3") Integer size) { 
+			@RequestParam(name = "size", defaultValue = "3") Integer size) {
 		if (br.hasErrors()) {
 			throw new MyException(contentReader.readFromFile("validationException.txt"), br, "ValidationException");
 		}

@@ -165,7 +165,8 @@ public class BookService {
 
 	public BookListResponse getPaginated(Integer page, Integer size) {
 		if (page < 1) {
-			throw new MyException(contentReader.readFromFile("invalidPaginationQuery.txt"), null, "InvalidPageNumberException");
+			throw new MyException(contentReader.readFromFile("invalidPaginationQuery.txt"), null,
+					"InvalidPageNumberException");
 		}
 		page = (page - 1) * size;
 		List<BookEntity> paginatedBooks = repository.getPaginated(page, size);
@@ -193,7 +194,7 @@ public class BookService {
 		if (userService.findOperatorId() != bookOwnerId) {
 			throw new MyException(contentReader.readFromFile("forbidden.txt") + "book", null, "Forbidden");
 
-		} 
+		}
 
 		modelMapper.map(book, existingBook);
 

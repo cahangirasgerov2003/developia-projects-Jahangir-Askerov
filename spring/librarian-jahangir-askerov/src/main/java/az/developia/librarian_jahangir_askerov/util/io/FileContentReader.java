@@ -2,16 +2,25 @@ package az.developia.librarian_jahangir_askerov.util.io;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+
+import org.springframework.core.io.ClassPathResource;
 
 import az.developia.librarian_jahangir_askerov.exception.MyException;
 
 public class FileContentReader {
 
-	public String readFromFile(String fileName) {
+//	new FileReader(...) → yalnız diskdə olan real fayllar üçündür (production-da problem yaradır).
+//
+//	ClassPathResource + InputStreamReader → həm dev, həm də production-da işləyir (resurs faylları üçün ən yaxşı yol).
 
-		try (BufferedReader br = new BufferedReader(new FileReader("files/" + fileName))) {
+	public String readFromFile(String fileName) {
+		
+		ClassPathResource resource = new ClassPathResource("files/" + fileName);
+
+
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(resource.getInputStream()))) {
 
 			StringBuilder sb = new StringBuilder();
 

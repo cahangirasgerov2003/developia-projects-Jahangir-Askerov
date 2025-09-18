@@ -112,10 +112,9 @@ public class StudentService {
 
 		req.setName(req.getName().toLowerCase());
 		req.setSurname(req.getSurname().toLowerCase());
-		
+
 		Integer operatorId = userService.findOperatorId();
-		
-		
+
 		System.out.println(operatorId + "OOOOOOOOOOOOOOOOOOOOOOOO");
 
 		Long count = repository.getByFilterCount(operatorId, req.getName(), req.getSurname());
@@ -123,8 +122,8 @@ public class StudentService {
 		if (count == 0)
 			throw new MyException("Unfortunately, nothing was found based on your search", null, "NotFoundException");
 
-		List<StudentEntity> filteredStudents = repository.getByFilter(operatorId, req.getName(),
-				req.getSurname(), page, size);
+		List<StudentEntity> filteredStudents = repository.getByFilter(operatorId, req.getName(), req.getSurname(), page,
+				size);
 
 		List<StudentSingleResponse> mappedStudents = new ArrayList<StudentSingleResponse>();
 

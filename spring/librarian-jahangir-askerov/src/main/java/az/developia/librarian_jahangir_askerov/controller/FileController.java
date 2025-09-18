@@ -32,15 +32,15 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping(path = "/files")
 public class FileController {
-	
+
 	@Autowired
 	private FileContentReader contentReader;
-	
+
 	@Autowired
 	private ResourceLoader loader;
-	
+
 	private Path rootLoacation;
-	
+
 	@PostConstruct
 	public void init() {
 		rootLoacation = Paths.get("C:/files");
@@ -49,62 +49,61 @@ public class FileController {
 //	File upload
 	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public void upload(@RequestParam MultipartFile file) throws Exception {
-		
+
 		InputStream stream = file.getInputStream();
-		
+
 		String originalFilename = file.getOriginalFilename();
-		
+
 		int extensionSeparatorIndex = originalFilename.lastIndexOf(".");
-		
+
 		String filenameWithoutExtension = originalFilename.substring(0, extensionSeparatorIndex);
-		
+
 //		String filenameExtension = originalFilename.substring(extensionSeparatorIndex);
-		
+
 		String uuid = UUID.randomUUID().toString();
-		
+
 		String filenameNewVersion = originalFilename.replace(filenameWithoutExtension, uuid);
-		
+
 		Files.copy(stream, Paths.get("C:/files", filenameNewVersion), StandardCopyOption.REPLACE_EXISTING);
 	}
-	
+
 	@GetMapping("/download/raw/{filename:.+}")
-	public ResponseEntity<Resource> regularDownload(@PathVariable String filename){
-		
+	public ResponseEntity<Resource> regularDownload(@PathVariable String filename) {
+
 		Resource file = getResourceByFilename(filename);
-		
-		if(file == null) {
+
+		if (file == null) {
 			throw new MyException(contentReader.readFromFile("fileNotFound.txt"), null, "FileNotFoundException");
 		}
-		
-		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename = \"" + filename + "\"" ).body(file);
+
+		return ResponseEntity.ok()
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename = \"" + filename + "\"").body(file);
 	}
- 
+
 	private Resource getResourceByFilename(String filename) {
-		
+
 		try {
 			Path fullPath = getFileFullPath(filename);
-			
+
 			Resource resource = new UrlResource(fullPath.toUri());
-				
-			if(resource.isReadable() || resource.exists()) {
+
+			if (resource.isReadable() || resource.exists()) {
 				return resource;
 			}
-			
+
 		} catch (MalformedURLException e) {
 			e.getStackTrace();
 		}
-		
-		
-		
+
 		return null;
 	}
 
 	private Path getFileFullPath(String filename) {
 		return rootLoacation.resolve(filename);
 	}
-	
+
 	@GetMapping(path = "/video/{title}", produces = "video/mp4")
-	public Mono<Resource> partialDownload(@PathVariable String title, @RequestHeader String range){
+	public Mono<Resource> partialDownload(@PathVariable String title, @RequestHeader String range) {
 		System.out.println("Download range : " + range);
 		return getVideo(title);
 	}
@@ -112,5 +111,5 @@ public class FileController {
 	private Mono<Resource> getVideo(String title) {
 		return Mono.fromSupplier(() -> loader.getResource("file:C:/files/" + title));
 	}
-	
+
 }

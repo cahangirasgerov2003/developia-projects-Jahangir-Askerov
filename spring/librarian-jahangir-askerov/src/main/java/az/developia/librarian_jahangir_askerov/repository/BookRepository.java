@@ -36,6 +36,6 @@ public interface BookRepository extends JpaRepository<BookEntity, Integer> {
 	@Query(value = "Select * from books where (?1=0 or category_id=?1) and lower(name) like %?2% limit ?3, ?4", nativeQuery = true)
 	public abstract List<BookEntity> getByCustomerFilter(Integer categoryId, String name, Integer page, Integer size);
 
-	@Query(value = "Select * from books where lower(name) like %?1%" ,nativeQuery = true)
+	@Query(value = "Select * from books where lower(name) like %?1%", nativeQuery = true)
 	public abstract List<BookEntity> findAllByNameContaining(String q);
 }

@@ -1,40 +1,28 @@
 package az.developia.librarian_jahangir_askerov.entity;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Table(name = "permissions")
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PermissionEntity {
+
+@Entity
+@Table(name = "translations")
+public class TranslationEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	private String authority;
+	private String language;
 
-	private Integer student;
+	private String word;
 
-	private Integer librarian;
-
-	@Column(columnDefinition = "int default 1")
-	private Integer admin;
-
-	@PrePersist
-	public void prePersist() {
-		if (this.admin == null) {
-			this.admin = 1;
-		}
-	}
+	private String translate;
 }
