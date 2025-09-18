@@ -16,9 +16,8 @@ public class FileContentReader {
 //	ClassPathResource + InputStreamReader → həm dev, həm də production-da işləyir (resurs faylları üçün ən yaxşı yol).
 
 	public String readFromFile(String fileName) {
-		
-		ClassPathResource resource = new ClassPathResource("files/" + fileName);
 
+		ClassPathResource resource = new ClassPathResource("files/" + fileName);
 
 		try (BufferedReader br = new BufferedReader(new InputStreamReader(resource.getInputStream()))) {
 

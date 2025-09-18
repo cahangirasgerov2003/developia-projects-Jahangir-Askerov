@@ -2,6 +2,7 @@ package az.developia.librarian_jahangir_askerov.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -17,6 +18,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EnableScheduling
+@EnableCaching
 public class ApplicationConfig {
 
 	@Value(value = "${book.count.limit}")

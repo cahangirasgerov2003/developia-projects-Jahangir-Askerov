@@ -26,7 +26,7 @@ public class ErrorTranslationController {
 
 		return ResponseEntity.ok(service.getAllByLanguage(locale));
 	}
- 
+
 	@GetMapping("/by-word")
 	public ResponseEntity<String> getByWord(
 			@RequestHeader(value = "Accept-Language", defaultValue = "en") Locale locale,

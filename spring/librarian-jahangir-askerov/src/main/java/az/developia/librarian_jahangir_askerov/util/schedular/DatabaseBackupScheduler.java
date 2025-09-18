@@ -12,7 +12,7 @@ public class DatabaseBackupScheduler {
 	@Autowired
 	DatabaseBackupService service;
 
-	@Scheduled(cron = "0 0 15 * * ?", zone = "Asia/Baku")
+	@Scheduled(cron = "0 0 18 * * ?", zone = "Asia/Baku")
 	public void performDatabaseBackup() {
 
 		service.backupDatabase();

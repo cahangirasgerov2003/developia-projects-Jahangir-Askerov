@@ -6,6 +6,8 @@ import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.RestController;
 
 import az.developia.librarian_jahangir_askerov.config.ApplicationConfig;
@@ -48,6 +50,7 @@ public class BookService {
 		return new BookAddResponse(bookEntity.getId());
 	}
 
+	@Cacheable(value = "allBooks", key = "'all'")
 	public BookListResponse getAll() {
 		List<BookEntity> allBooks = repository.findAll();
 		List<BookSingleResponse> mappedBooks = new ArrayList<BookSingleResponse>();
@@ -62,6 +65,7 @@ public class BookService {
 
 	public BookSingleResponse getById(Integer id) {
 		Optional<BookEntity> optionalBook = repository.findById(id);
+
 		if (optionalBook.isEmpty()) {
 			throw new MyException(contentReader.readFromFile("idNotFound.txt"), null, "NotFoundException");
 		}
@@ -180,6 +184,8 @@ public class BookService {
 		return books;
 	}
 
+//	@CachePut(value = "allBooks", key = "'all'")
+	@CacheEvict(value = "allBooks", key = "'all'")
 	public void updateById(Integer id, BookUpdateRequest book) {
 		Optional<BookEntity> optionalBook = repository.findById(id);
 
