@@ -20,6 +20,8 @@ public class CacheInspectionService {
 		if (cache != null) {
 			System.out.println("Cache contents: ");
 			System.out.println(Objects.requireNonNull(cache.getNativeCache().toString()));
+			System.out.println("Cache name: ");
+			System.out.println(Objects.requireNonNull(cache.getName()));
 		} else {
 			System.out.println("No such cache: " + cacheName);
 		}

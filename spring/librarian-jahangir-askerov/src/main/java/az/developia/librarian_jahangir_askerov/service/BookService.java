@@ -40,7 +40,8 @@ public class BookService {
 
 	@Autowired
 	private ApplicationConfig applicationConfig;
-
+	
+	@CacheEvict(value = "allBooks", key = "'all'")
 	public BookAddResponse create(BookAddRequest book) {
 		BookEntity bookEntity = modelMapper.map(book, BookEntity.class);
 
@@ -208,6 +209,7 @@ public class BookService {
 
 	}
 
+	@CacheEvict(value = "allBooks", key = "'all'")
 	public void deleteById(Integer id) {
 		Optional<BookEntity> optionalBook = repository.findById(id);
 		if (optionalBook.isEmpty()) {
