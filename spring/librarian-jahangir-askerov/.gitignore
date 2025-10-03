@@ -36,4 +36,4 @@ build/
 .env
 
 ### Log files ###
-logback-spring.xml
+*.log
