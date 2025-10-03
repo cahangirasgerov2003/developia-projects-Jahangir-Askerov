@@ -18,7 +18,8 @@ insert into permissions (authority, admin, librarian, student) values
 ('ROLE_DELETE_STUDENT', 0, 1, 0),
 ('ROLE_UPDATE_STUDENT', 0, 1, 0),
 ('ROLE_FILTER_STUDENTS', 0, 1, 0),
-('ROLE_STUDENT_SEARCH_BOOKS', 0, 0, 1);
+('ROLE_STUDENT_SEARCH_BOOKS', 0, 0, 1),
+('ROLE_FIND_ALL_LIBRARIANS_WITH_BOOK_COUNT', 1, 0, 0);
 
 insert into librarians (name, surname, birthday, email, phone, city, country, street, zip_code, user_id) values
 ('Ali', 'Aliyev', '2005-01-11', 'cavid22@gmail.com', '055-011-11-11', 'Baku', 'Ajarbaijan', 'not', '12345', 1),
@@ -53,3 +54,9 @@ insert into authorities (username, authority) select 'l1', authority from permis
 insert into authorities (username, authority) select 'l2', authority from permissions where librarian=1;
 
 insert into authorities (username, authority) select 's1', authority from permissions where student=1;
+
+drop table librarians_book_count;
+
+create view librarians_book_count as (
+select l.id, l.name, l.surname, u.username, count(b.name) as book_count from librarians l left join books b on l.id = b.operator_id inner join users u on l.user_id = u.id group by l.id, l.name, l.surname, u.username order by count(b.name) desc
+)
