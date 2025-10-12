@@ -82,4 +82,13 @@ public class UserService {
 		return new UserAddResponse(entity.getId());
 	}
 
+	public String getUsernameByUserId(Integer id) {
+		Optional<UserEntity> optional = repository.findById(id);
+		if (optional.isEmpty()) {
+			throw new MyException(contentReader.readFromFile("idNotFound.txt"), null, "NotFoundException");
+		}
+
+		return optional.get().getUsername();
+	}
+
 }

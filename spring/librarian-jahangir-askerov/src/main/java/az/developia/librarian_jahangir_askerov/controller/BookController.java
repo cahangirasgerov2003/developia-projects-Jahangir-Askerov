@@ -21,6 +21,7 @@ import az.developia.librarian_jahangir_askerov.request.BookFilterRequest;
 import az.developia.librarian_jahangir_askerov.request.BookUpdateRequest;
 import az.developia.librarian_jahangir_askerov.request.ByCustomerFilterRequest;
 import az.developia.librarian_jahangir_askerov.response.BookAddResponse;
+import az.developia.librarian_jahangir_askerov.response.BookDetailsSingleResponse;
 import az.developia.librarian_jahangir_askerov.response.BookListResponse;
 import az.developia.librarian_jahangir_askerov.response.BookSingleResponse;
 import az.developia.librarian_jahangir_askerov.service.BookService;
@@ -29,6 +30,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(path = "/books")
+//@CrossOrigin(origins = "*")
 public class BookController {
 	@Autowired
 	private BookService service;
@@ -116,4 +118,8 @@ public class BookController {
 		return ResponseEntity.noContent().build();
 	}
 
+	@GetMapping(path = "/details/{id}")
+	public ResponseEntity<BookDetailsSingleResponse> getDetails(@PathVariable Integer id) {
+		return ResponseEntity.ok(service.getDetails(id));
+	}
 }

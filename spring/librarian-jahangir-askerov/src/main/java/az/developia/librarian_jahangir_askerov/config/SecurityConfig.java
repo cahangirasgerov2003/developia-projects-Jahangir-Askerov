@@ -50,6 +50,7 @@ public class SecurityConfig {
 						.requestMatchers(HttpMethod.POST, "/librarians").permitAll()
 						.requestMatchers(HttpMethod.GET, "/files/video/**").permitAll()
 						.requestMatchers(HttpMethod.POST, "/books/filter-for-customer").permitAll()
+						.requestMatchers(HttpMethod.GET, "/books/details/**").permitAll()
 						.requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
 						.anyRequest().authenticated())
 				.httpBasic(Customizer.withDefaults())

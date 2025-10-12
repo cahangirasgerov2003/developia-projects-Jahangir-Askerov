@@ -1,15 +1,20 @@
 package az.developia.librarian_jahangir_askerov.service;
 
+import java.util.Optional;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import az.developia.librarian_jahangir_askerov.entity.LibrarianEntity;
+import az.developia.librarian_jahangir_askerov.exception.MyException;
 import az.developia.librarian_jahangir_askerov.repository.LibrarianRepository;
 import az.developia.librarian_jahangir_askerov.request.LibrarianAddRequest;
 import az.developia.librarian_jahangir_askerov.response.AuthorityAddResponse;
 import az.developia.librarian_jahangir_askerov.response.LibrarianAddResponse;
+import az.developia.librarian_jahangir_askerov.response.LibrarianSingleResponse;
 import az.developia.librarian_jahangir_askerov.response.UserAddResponse;
+import az.developia.librarian_jahangir_askerov.util.io.FileContentReader;
 import jakarta.transaction.Transactional;
 
 @RestController
@@ -27,6 +32,9 @@ public class LibrarianService {
 
 	@Autowired
 	private ModelMapper modelMapper;
+
+	@Autowired
+	private FileContentReader contentReader;
 
 	public LibrarianAddResponse add(LibrarianAddRequest req) {
 
@@ -48,6 +56,18 @@ public class LibrarianService {
 		Integer affectedRows = authorityAddResponse.getAffectedRows();
 
 		return new LibrarianAddResponse(librarianEntity.getId(), user_id, affectedRows);
+	}
+
+	public LibrarianSingleResponse getLibrarianByOperatorId(Integer operator_id) {
+		Optional<LibrarianEntity> optionalLibrarian = repository.findById(operator_id);
+
+		if (optionalLibrarian.isEmpty()) {
+			throw new MyException(contentReader.readFromFile("idNotFound.txt"), null, "NotFoundException");
+		}
+
+		LibrarianSingleResponse response = modelMapper.map(optionalLibrarian.get(), LibrarianSingleResponse.class);
+
+		return response;
 	}
 
 }

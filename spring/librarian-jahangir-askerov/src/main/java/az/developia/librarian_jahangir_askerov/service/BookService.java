@@ -19,8 +19,10 @@ import az.developia.librarian_jahangir_askerov.request.BookFilterRequest;
 import az.developia.librarian_jahangir_askerov.request.BookUpdateRequest;
 import az.developia.librarian_jahangir_askerov.request.ByCustomerFilterRequest;
 import az.developia.librarian_jahangir_askerov.response.BookAddResponse;
+import az.developia.librarian_jahangir_askerov.response.BookDetailsSingleResponse;
 import az.developia.librarian_jahangir_askerov.response.BookListResponse;
 import az.developia.librarian_jahangir_askerov.response.BookSingleResponse;
+import az.developia.librarian_jahangir_askerov.response.LibrarianSingleResponse;
 import az.developia.librarian_jahangir_askerov.util.io.FileContentReader;
 import jakarta.validation.Valid;
 
@@ -40,6 +42,9 @@ public class BookService {
 
 	@Autowired
 	private ApplicationConfig applicationConfig;
+
+	@Autowired
+	private LibrarianService librarianService;
 
 	@CacheEvict(value = "allBooks", key = "'all'")
 	public BookAddResponse create(BookAddRequest book) {
@@ -226,6 +231,33 @@ public class BookService {
 
 		repository.deleteById(id);
 
+	}
+
+	public BookDetailsSingleResponse getDetails(Integer id) {
+
+		Optional<BookEntity> optionalBook = repository.findById(id);
+
+		if (optionalBook.isEmpty()) {
+			throw new MyException(contentReader.readFromFile("idNotFound.txt"), null, "NotFoundException");
+		}
+
+		BookEntity book = optionalBook.get();
+
+		BookDetailsSingleResponse response = modelMapper.map(book, BookDetailsSingleResponse.class);
+
+		Integer operator_id = book.getOperator_id();
+
+		LibrarianSingleResponse librarian = librarianService.getLibrarianByOperatorId(operator_id);
+
+		response.setSurname(librarian.getSurname());
+
+		response.setNameLibrarian(librarian.getName());
+
+		String username = userService.getUsernameByUserId(librarian.getUser_id());
+
+		response.setUsername(username);
+
+		return response;
 	}
 
 }
