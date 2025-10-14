@@ -19,6 +19,7 @@ insert into permissions (authority, admin, librarian, student) values
 ('ROLE_UPDATE_STUDENT', 0, 1, 0),
 ('ROLE_FILTER_STUDENTS', 0, 1, 0),
 ('ROLE_STUDENT_SEARCH_BOOKS', 0, 0, 1),
+('ROLE_LENDING_BOOK', 0, 1, 0),
 ('ROLE_FIND_ALL_LIBRARIANS_WITH_BOOK_COUNT', 1, 0, 0);
 
 insert into librarians (name, surname, birthday, email, phone, city, country, street, zip_code, user_id) values

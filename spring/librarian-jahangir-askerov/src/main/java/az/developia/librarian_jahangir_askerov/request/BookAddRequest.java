@@ -46,7 +46,7 @@ public class BookAddRequest {
 	private LocalDate publishDate;
 
 	@NotNull(message = "{field.empty}")
-	@Min(value = 1, message = "{pages.min}")
+	@Min(value = 1, message = "{bookCategory.min}")
 	private Integer bookCategory;
 
 	@PrePersist

@@ -115,8 +115,6 @@ public class StudentService {
 
 		Integer operatorId = userService.findOperatorId();
 
-		System.out.println(operatorId + "OOOOOOOOOOOOOOOOOOOOOOOO");
-
 		Long count = repository.getByFilterCount(operatorId, req.getName(), req.getSurname());
 
 		if (count == 0)
