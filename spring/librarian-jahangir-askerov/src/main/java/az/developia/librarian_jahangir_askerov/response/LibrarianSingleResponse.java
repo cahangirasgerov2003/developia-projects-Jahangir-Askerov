@@ -27,5 +27,5 @@ public class LibrarianSingleResponse {
 	private Address address;
 
 	private Integer user_id;
-	
+
 }

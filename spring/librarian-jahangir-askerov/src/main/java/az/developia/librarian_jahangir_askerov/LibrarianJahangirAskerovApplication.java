@@ -9,7 +9,8 @@ public class LibrarianJahangirAskerovApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(LibrarianJahangirAskerovApplication.class, args);
 	}
-	
+
 //	CTRL + SHIFT + T ---- Search
+	
 
 }

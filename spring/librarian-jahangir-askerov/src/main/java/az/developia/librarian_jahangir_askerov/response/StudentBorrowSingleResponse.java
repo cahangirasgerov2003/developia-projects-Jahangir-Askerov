@@ -1,31 +1,23 @@
-package az.developia.librarian_jahangir_askerov.entity;
+package az.developia.librarian_jahangir_askerov.response;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+
 import az.developia.librarian_jahangir_askerov.enums.BookCondition;
 import az.developia.librarian_jahangir_askerov.enums.LendingStatus;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Table(name = "book_leadings")
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BookBorrowEntity {
+public class StudentBorrowSingleResponse {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	private Integer book_id;
@@ -34,16 +26,20 @@ public class BookBorrowEntity {
 
 	private Integer librarian_id;
 
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	@JsonSerialize(using = LocalDateSerializer.class)
 	private LocalDate borrowDate;
 
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	@JsonSerialize(using = LocalDateSerializer.class)
 	private LocalDate returnDate;
 
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	@JsonSerialize(using = LocalDateSerializer.class)
 	private LocalDate actualReturnDate;
 
-	@Enumerated(value = EnumType.STRING)
 	private LendingStatus status;
 
-	@Enumerated(EnumType.STRING)
 	private BookCondition condition;
 
 	private BigDecimal fineAmount;
