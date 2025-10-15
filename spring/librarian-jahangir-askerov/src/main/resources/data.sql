@@ -47,6 +47,9 @@ insert into translations (language, word, translate) values
 ('en', 'COPY', 'copy'),
 ('az', 'EDIT', 'Redaktə et'),
 ('az', 'COPY', 'Kopyalayın');
+
+insert into book_lendings (book_id, student_id, librarian_id, borrow_date, return_date, fine_amount, actual_return_date, condition, status, note ) values
+(1, 1, 1, '2025-10-13', '2025-10-20', 20, null, 'NEW', 'ACTIVE', 'Borrowed for exam');
  
 insert into authorities (username, authority) select 'a1', authority from permissions where admin=1;
 

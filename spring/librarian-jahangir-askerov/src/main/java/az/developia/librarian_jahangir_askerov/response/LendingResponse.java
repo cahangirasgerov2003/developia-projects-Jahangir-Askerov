@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookBorrowResponse {
+public class LendingResponse {
 	private Integer id;
 }

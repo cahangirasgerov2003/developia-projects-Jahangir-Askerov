@@ -11,6 +11,5 @@ public class LibrarianJahangirAskerovApplication {
 	}
 
 //	CTRL + SHIFT + T ---- Search
-	
 
 }

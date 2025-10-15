@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class StudentBorrowListResponse {
+public class BorrowedBookListResponse {
 
-	private List<StudentBorrowSingleResponse> booksOnLoan;
+	private List<BorrowedBookSingleResponse> booksOnLoan;
 	private Long totalSize;
 
 }

@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BookBorrowRequest {
+public class LendingRequest {
 
 	@NotNullField(fieldName = "Book id")
 	@Positive(message = "Student id cannot be negative or zero")
