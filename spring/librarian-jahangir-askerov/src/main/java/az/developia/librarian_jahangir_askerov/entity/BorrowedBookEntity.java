@@ -3,36 +3,33 @@ package az.developia.librarian_jahangir_askerov.entity;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import org.hibernate.annotations.Immutable;
+
 import az.developia.librarian_jahangir_askerov.enums.BookCondition;
 import az.developia.librarian_jahangir_askerov.enums.LendingStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Table(name = "book_lendings")
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class LendingEntity {
 
+@Table(name = "borrowed_books_details")
+@Entity
+@Immutable
+public class BorrowedBookEntity {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-
-	private Integer book_id;
 
 	private Integer student_id;
 
-	private Integer librarian_id;
+	private Integer book_id;
 
 	private LocalDate borrowDate;
 
@@ -53,4 +50,21 @@ public class LendingEntity {
 
 	private String note;
 
+	private String bookName;
+
+	private Integer librarianIdentity;
+
+	private String librarianName;
+
+	private String studentName;
+
+	private String studentSurname;
+
+	private String studentEmail;
+
+	private String studentPhone;
+
+	private String country;
+
+	private String city;
 }

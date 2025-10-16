@@ -46,6 +46,9 @@ public class LendingRequest {
 	@NotNullField(fieldName = "Condition")
 	private BookCondition condition;
 
+	@NotNullField(fieldName = "Condition")
+	private BookCondition returnCondition;
+
 	@NotBlank(message = "{field.empty}")
 	private String note;
 
