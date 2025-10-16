@@ -73,7 +73,13 @@ public class LendingController {
 	@PreAuthorize(value = "hasAuthority('ROLE_LENDING_BOOK')")
 	public ResponseEntity<BorrowedBookDetailsListResponse> getReturnedByBorrowDateBetween(
 			@RequestParam(name = "startDate") LocalDate startDate, @RequestParam(name = "endDate") LocalDate endDate) {
-		return ResponseEntity.ok(service.getReturnedByBorrowDateBetween(startDate, endDate, LendingStatus.RETURNED ));
+		return ResponseEntity.ok(service.getReturnedByBorrowDateBetween(startDate, endDate, LendingStatus.RETURNED));
+	}
+
+	@GetMapping(path = "/overdued-books")
+	@PreAuthorize(value = "hasAuthority('ROLE_LENDING_BOOK')")
+	public ResponseEntity<BorrowedBookDetailsListResponse> getOverdued() {
+		return ResponseEntity.ok(service.getOverdued());
 	}
 
 	@PutMapping(path = "/borrowed-books/{id}/return")

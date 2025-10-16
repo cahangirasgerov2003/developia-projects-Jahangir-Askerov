@@ -97,6 +97,13 @@ public class LendingService {
 
 	}
 
+	public BorrowedBookDetailsListResponse getOverdued() {
+		Integer operatorId = userService.findOperatorId();
+		List<BorrowedBookEntity> allBorrowedBooks = borrowedBookRepository.findOverdued(operatorId);
+
+		return returnResponse(allBorrowedBooks);
+	}
+
 	public BorrowedBookDetailsResponse returnBorrowedBookResponse(Optional<BorrowedBookEntity> optional) {
 		if (optional.isEmpty()) {
 			throw new MyException(contentReader.readFromFile("idNotFound.txt"), null, "NotFoundException");
