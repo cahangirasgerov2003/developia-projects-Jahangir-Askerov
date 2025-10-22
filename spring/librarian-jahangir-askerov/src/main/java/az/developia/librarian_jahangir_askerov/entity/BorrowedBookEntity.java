@@ -41,7 +41,7 @@ public class BorrowedBookEntity {
 	private LendingStatus status;
 
 	@Enumerated(EnumType.STRING)
-	private BookCondition condition;
+	private BookCondition bookCondition;
 
 	@Enumerated(EnumType.STRING)
 	private BookCondition returnCondition;

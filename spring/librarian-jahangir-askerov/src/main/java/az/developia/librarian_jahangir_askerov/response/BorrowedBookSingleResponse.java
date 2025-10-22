@@ -40,7 +40,7 @@ public class BorrowedBookSingleResponse {
 
 	private LendingStatus status;
 
-	private BookCondition condition;
+	private BookCondition bookCondition;
 
 	private BookCondition returnCondition;
 

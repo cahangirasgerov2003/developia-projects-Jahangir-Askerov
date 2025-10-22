@@ -21,22 +21,22 @@ import lombok.NoArgsConstructor;
 @EnableCaching
 public class ApplicationConfig {
 
-	@Value(value = "${book.count.limit}")
+	@Value("${book.count.limit}")
 	private Integer bookCountLimit;
 
-	@Value("${DB_USER}")
+	@Value("${SPRING_DATASOURCE_USERNAME}")
 	private String dbUser;
 
-	@Value("${DB_PASSWORD}")
+	@Value("${SPRING_DATASOURCE_PASSWORD}")
 	private String dbPassword;
 
-	@Value("${DB_HOST}")
+	@Value("${MYSQL_HOST:localhost}")
 	private String dbHost;
 
-	@Value("${DB_PORT}")
+	@Value("${MYSQL_PORT:3306}")
 	private int dbPort;
 
-	@Value("${DB_NAME}")
+	@Value("${MYSQL_DATABASE:librarian}")
 	private String dbName;
 
 	@Bean

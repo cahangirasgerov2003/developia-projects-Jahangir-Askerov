@@ -27,7 +27,7 @@ public class BorrowedBookDetailsResponse {
 
 	private LendingStatus status;
 
-	private BookCondition condition;
+	private BookCondition bookCondition;
 
 	private BookCondition returnCondition;
 

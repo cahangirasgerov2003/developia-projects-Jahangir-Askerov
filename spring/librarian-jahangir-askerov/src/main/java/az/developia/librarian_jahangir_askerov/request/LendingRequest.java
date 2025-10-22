@@ -44,7 +44,7 @@ public class LendingRequest {
 	private LendingStatus status;
 
 	@NotNullField(fieldName = "Condition")
-	private BookCondition condition;
+	private BookCondition bookCondition;
 
 	@NotBlank(message = "{field.empty}")
 	private String note;

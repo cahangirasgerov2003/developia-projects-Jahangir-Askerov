@@ -48,7 +48,7 @@ insert into translations (language, word, translate) values
 ('az', 'EDIT', 'Redaktə et'),
 ('az', 'COPY', 'Kopyalayın');
 
-insert into book_lendings (book_id, student_id, librarian_id, borrow_date, return_date, fine_amount, actual_return_date, condition, status, note ) values
+insert into book_lendings (book_id, student_id, librarian_id, borrow_date, return_date, fine_amount, actual_return_date, book_condition, status, note ) values
 (1, 1, 2, '2025-10-13', '2025-10-20', 20, null, 'NEW', 'ACTIVE', 'Borrowed for exam');
  
 insert into authorities (username, authority) select 'a1', authority from permissions where admin=1;
@@ -68,5 +68,5 @@ select l.id, l.name, l.surname, u.username, count(b.name) as book_count from lib
 drop table borrowed_books_details;
 
 create view borrowed_books_details as (
-SELECT bl.id, bl.student_id, bl.book_id, bl.borrow_date, bl.return_date, bl.actual_return_date, bl.status, bl.condition, bl.return_condition, bl.fine_amount, bl.note, b.name as book_name, l.id as librarian_identity, l.name as librarian_name, s.name as student_name, s.surname as student_surname, s.email as student_email, s.phone as student_phone, s.country, s.city from book_lendings bl left join books b on bl.book_id = b.id left join students s on bl.student_id = s.id left join librarians l on bl.librarian_id = l.id
+SELECT bl.id, bl.student_id, bl.book_id, bl.borrow_date, bl.return_date, bl.actual_return_date, bl.status, bl.book_condition, bl.return_condition, bl.fine_amount, bl.note, b.name as book_name, l.id as librarian_identity, l.name as librarian_name, s.name as student_name, s.surname as student_surname, s.email as student_email, s.phone as student_phone, s.country, s.city from book_lendings bl left join books b on bl.book_id = b.id left join students s on bl.student_id = s.id left join librarians l on bl.librarian_id = l.id
 );

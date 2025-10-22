@@ -23,7 +23,7 @@ services:
       - mysql-db
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/librarian
-      DB_USER: cahangir2003
+      SPRING_DATASOURCE_USERNAME: cahangir2003
       SPRING_DATASOURCE_PASSWORD: 1234
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_JPA_SHOW_SQL: "true"
