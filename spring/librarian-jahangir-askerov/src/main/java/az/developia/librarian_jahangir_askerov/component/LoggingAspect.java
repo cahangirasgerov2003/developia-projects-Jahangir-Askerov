@@ -14,5 +14,5 @@ public class LoggingAspect {
 	public void logBefore() {
 		System.out.println("Method called!");
 	}
-	
+
 }

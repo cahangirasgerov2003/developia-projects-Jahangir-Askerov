@@ -8,7 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
-import az.developia.librarian_jahangir_askerov.entity.PermissionEntity;
+import az.developia.librarian_jahangir_askerov.entity.RoleEntity;
 import az.developia.librarian_jahangir_askerov.exception.MyException;
 import az.developia.librarian_jahangir_askerov.repository.PermissionRepository;
 import az.developia.librarian_jahangir_askerov.request.PermissionAddRequest;
@@ -41,7 +41,7 @@ public class PermissionService {
 					"AuthorityAlreadyExistsException");
 		}
 
-		PermissionEntity permission = modelMapper.map(req, PermissionEntity.class);
+		RoleEntity permission = modelMapper.map(req, RoleEntity.class);
 		repository.save(permission);
 
 		return new PermissionAddResponse(permission.getId());
@@ -49,9 +49,9 @@ public class PermissionService {
 	}
 
 	public PermissionListResponse findAll() {
-		List<PermissionEntity> allPermissions = repository.findAll();
+		List<RoleEntity> allPermissions = repository.findAll();
 		List<PermissionSingleResponse> mappedPermissions = new ArrayList<PermissionSingleResponse>();
-		for (PermissionEntity permission : allPermissions) {
+		for (RoleEntity permission : allPermissions) {
 			PermissionSingleResponse resp = modelMapper.map(permission, PermissionSingleResponse.class);
 			mappedPermissions.add(resp);
 		}
@@ -62,7 +62,7 @@ public class PermissionService {
 	}
 
 	public PermissionSingleResponse findById(Integer id) {
-		Optional<PermissionEntity> optional = repository.findById(id);
+		Optional<RoleEntity> optional = repository.findById(id);
 
 		if (optional.isEmpty()) {
 			throw new MyException(contentReader.readFromFile("idNotFound.txt"), null, "EntityNotFoundException");
@@ -73,9 +73,9 @@ public class PermissionService {
 	}
 
 	public PermissionListResponse findByName(String q) {
-		List<PermissionEntity> searchedPermissions = repository.findAllByAuthorityContaining(q);
+		List<RoleEntity> searchedPermissions = repository.findAllByAuthorityContaining(q);
 		List<PermissionSingleResponse> mappedPermissions = new ArrayList<PermissionSingleResponse>();
-		for (PermissionEntity permission : searchedPermissions) {
+		for (RoleEntity permission : searchedPermissions) {
 			PermissionSingleResponse resp = modelMapper.map(permission, PermissionSingleResponse.class);
 			mappedPermissions.add(resp);
 		}
@@ -91,9 +91,9 @@ public class PermissionService {
 					"InvalidPaginationQueryException");
 		}
 		page = (page - 1) * size;
-		List<PermissionEntity> paginatedPermissions = repository.findAllPaginated(page, size);
+		List<RoleEntity> paginatedPermissions = repository.findAllPaginated(page, size);
 		List<PermissionSingleResponse> mappedPermissions = new ArrayList<PermissionSingleResponse>();
-		for (PermissionEntity permission : paginatedPermissions) {
+		for (RoleEntity permission : paginatedPermissions) {
 			PermissionSingleResponse resp = modelMapper.map(permission, PermissionSingleResponse.class);
 			mappedPermissions.add(resp);
 		}
@@ -104,7 +104,7 @@ public class PermissionService {
 	}
 
 	public void deleteById(Integer id) {
-		Optional<PermissionEntity> optional = repository.findById(id);
+		Optional<RoleEntity> optional = repository.findById(id);
 
 		if (optional.isEmpty()) {
 			throw new MyException(contentReader.readFromFile("idNotFound.txt"), null, "EntityNotFoundException");
@@ -114,7 +114,7 @@ public class PermissionService {
 	}
 
 	public void updateById(Integer id, @Valid PermissionUpdateRequest req) {
-		Optional<PermissionEntity> optional = repository.findById(id);
+		Optional<RoleEntity> optional = repository.findById(id);
 
 		if (optional.isEmpty()) {
 			throw new MyException(contentReader.readFromFile("idNotFound.txt"), null, "EntityNotFoundException");
@@ -122,7 +122,7 @@ public class PermissionService {
 
 		this.existsByAuthority(req.getAuthority());
 
-		PermissionEntity existingPermission = optional.get();
+		RoleEntity existingPermission = optional.get();
 
 		modelMapper.map(req, existingPermission);
 

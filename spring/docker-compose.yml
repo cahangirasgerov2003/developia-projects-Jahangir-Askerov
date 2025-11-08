@@ -27,6 +27,8 @@ services:
       SPRING_DATASOURCE_PASSWORD: 1234
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_JPA_SHOW_SQL: "true"
+      JWT_SECRET: 1ZkUNpUbnJEwVqqZzD3lH0to+T+EHQI8fCOELDXd1xo=
+      JWT_REFRESH_SECRET: jBkAZhnSr/QfQfQs7uJ+msPDzHGjmx3imzPxt1HPYxY=
     networks:
       - my-network
 

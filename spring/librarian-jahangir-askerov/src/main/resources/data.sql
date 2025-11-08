@@ -1,4 +1,4 @@
-insert into permissions (authority, admin, librarian, student) values 
+insert into roles (authority, admin, librarian, student) values 
 ('ROLE_ADD_PERMISSION', 1, 0, 0), 
 ('ROLE_FIND_ALL_PERMISSIONS', 1, 0, 0),
 ('ROLE_FIND_BY_ID_PERMISSION', 1, 0, 0), 
@@ -28,10 +28,10 @@ insert into librarians (name, surname, birthday, email, phone, city, country, st
 ('Qulu', 'Aliyev', '2005-02-01', 'cavid22@gmail.com', '055-011-11-11', 'Baku', 'Ajarbaijan', 'not', '12345', 3);
 
 insert into users (username, password, enabled, active, type) values
-('a1', '{noop}1', 1, 1, 'admin'),
-('l1', '{noop}1', 1, 1, 'librarian'),
-('l2', '{noop}1', 1, 1, 'librarian'),
-('s1', '{noop}1', 1, 1, 'student');
+('a1', '$2a$12$LKSbRUC2o88QMXzUymfz4u4UeNNWN6D4P53WwWSXKik72YAPDMpda', 1, 1, 'admin'),
+('l1', '$2a$12$LKSbRUC2o88QMXzUymfz4u4UeNNWN6D4P53WwWSXKik72YAPDMpda', 1, 1, 'librarian'),
+('l2', '$2a$12$LKSbRUC2o88QMXzUymfz4u4UeNNWN6D4P53WwWSXKik72YAPDMpda', 1, 1, 'librarian'),
+('s1', '$2a$12$LKSbRUC2o88QMXzUymfz4u4UeNNWN6D4P53WwWSXKik72YAPDMpda', 1, 1, 'student');
 
 insert into books (name, price, author, description, color, page_count, publish_date, operator_id, book_category ) values
 ('1984', '25', 'GEORGE ORWELL', 'It tells the story of Winston Smith', 'red', '212', '2001-01-12', 2, 1 ),
@@ -51,13 +51,13 @@ insert into translations (language, word, translate) values
 insert into book_lendings (book_id, student_id, librarian_id, borrow_date, return_date, fine_amount, actual_return_date, book_condition, status, note ) values
 (1, 1, 2, '2025-10-13', '2025-10-20', 20, null, 'NEW', 'ACTIVE', 'Borrowed for exam');
  
-insert into authorities (username, authority) select 'a1', authority from permissions where admin=1;
+insert into user_roles (user_id, role_id) select 1, id from roles where admin=1;
 
-insert into authorities (username, authority) select 'l1', authority from permissions where librarian=1;
+insert into user_roles (user_id, role_id) select 2, id from roles where librarian=1;
 
-insert into authorities (username, authority) select 'l2', authority from permissions where librarian=1;
+insert into user_roles (user_id, role_id) select 3, id from roles where librarian=1;
 
-insert into authorities (username, authority) select 's1', authority from permissions where student=1;
+insert into user_roles (user_id, role_id) select 4, id from roles where student=1;
 
 drop table librarians_book_count;
 
